@@ -78,7 +78,7 @@
       margin: 0 0 12px;
       letter-spacing: -0.3px;
       text-align: center;     
-      hyphens: none;   
+      hyphens: none;        
     }
     h2 {
       color: var(--text);
@@ -345,7 +345,7 @@
     })();
 
     // ===== Загрузка и парсинг статьи =====
-    const FILE = 'anxiety.txt';
+    const FILE = 'your-rules.txt';
 
     function renderText(raw) {
       raw = raw.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
@@ -412,19 +412,22 @@
     }
 
     function inline(text) {
-      text = text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+        text = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
 
-      text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
-      text = text.replace(
-        /(https?:\/\/[^\s<]+)/g,
-        '<a href="$1" target="_blank" rel="noopener">$1</a>'
-      );
+        // Ручной перенос строки: // → <br>
+        text = text.replace(/\s*\|\|\s*/g, '<br>');
 
-      return text;
+        text = text.replace(
+            /(https?:\/\/[^\s<]+)/g,
+            '<a href="$1" target="_blank" rel="noopener">$1</a>'
+        );
+
+        return text;
     }
 
     fetch(FILE)

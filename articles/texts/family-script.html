@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Когда семья передаёт не только фамилию, но и способ жить — Светлакова Наталья</title>
+  <title>Когда семья передаёт не только фамилию, но и способ жить</title>
   <meta name="description" content="Как семейные сценарии влияют на нашу жизнь и можно ли их изменить">
-  <style>
+<style>
     :root {
       --primary: #b72e4a;
       --primary-dark: #8a1f36;
@@ -77,8 +77,8 @@
       line-height: 1.25;
       margin: 0 0 12px;
       letter-spacing: -0.3px;
-      text-align: center;  
-      hyphens: none;       
+      text-align: center;     
+      hyphens: none;         
     }
     h2 {
       color: var(--text);
@@ -91,12 +91,6 @@
       font-weight: 500;
       font-size: 1.1rem;
       margin: 32px 0 12px;
-    }
-
-    h1, h2, h3, .author-line, figcaption, .back {
-      text-align: left;
-      hyphens: none;
-      -webkit-hyphens: none;
     }
 
     .author-line {
@@ -424,6 +418,9 @@
         .replace(/>/g, '&gt;');
 
       text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      // Ручной перенос строки: // → <br>
+      text = text.replace(/\s*\|\|\s*/g, '<br>');
 
       text = text.replace(
         /(https?:\/\/[^\s<]+)/g,
