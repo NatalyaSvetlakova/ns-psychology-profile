@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>По каким правилам вы живёте? Практика осознанного выхода из семейных сценариев</title>
+  <meta name="description" content="Как распознать унаследованные семейные сценарии и осознанно выбрать собственные">
+  <style>
+    :root {
+      --primary: #b72e4a;
+      --primary-dark: #8a1f36;
+      --text: #2b2b2b;
+      --text-muted: #6b6b6b;
+      --border: #ece5dd;
+      --gold: #c9a961;
+      --bg: #fcfaf7;
+      --bg-card: #ffffff;
+      --shadow-sm: 0 2px 10px rgba(80, 60, 40, 0.06);
+      --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);
+      --link-underline: rgba(183, 46, 74, 0.35);
+    }
+
+    html[data-theme="dark"] {
+      --primary: #e6889a;
+      --primary-dark: #c96d80;
+      --text: #ece6e2;
+      --text-muted: #a09a95;
+      --border: #322b27;
+      --gold: #d4b274;
+      --bg: #171412;
+      --bg-card: #211c19;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.55);
+      --link-underline: rgba(230, 136, 154, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      line-height: 1.75;
+      color: var(--text);
+      background: var(--bg);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    a.back {
+      display: inline-block;
+      color: var(--primary);
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+    a.back:hover { text-decoration: underline; }
+
+    h1, h2, h3, .author-line, figcaption, .back {
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-weight: 500;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      line-height: 1.25;
+      margin: 0 0 12px;
+      letter-spacing: -0.3px;
+      text-align: center;     
+      hyphens: none;   
+    }
+    h2 {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.3rem;
+      margin: 44px 0 14px;
+    }
+    h3 {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin: 32px 0 12px;
+    }
+
+    .author-line {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.92rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      margin: 0 0 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .author-line .author-role {
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 8px;
+    }
+
+    p {
+      margin: 0 0 18px;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+      margin: 0 0 18px;
+      text-align: left;
+      hyphens: none;
+    }
+    li { margin-bottom: 8px; }
+
+    strong { font-weight: 700; color: inherit; }
+
+    p a, li a, blockquote a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-decoration-color: var(--link-underline);
+      text-underline-offset: 3px;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+      word-break: break-word;
+    }
+    p a:hover, li a:hover, blockquote a:hover {
+      color: var(--primary-dark);
+      text-decoration-color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 24px 0;
+      box-shadow: 0 8px 24px rgba(80, 60, 40, 0.12);
+    }
+    figure { margin: 32px 0; }
+    figcaption {
+      font-family: -apple-system, sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 4px 0 4px 20px;
+      margin: 24px 0;
+      font-style: italic;
+      color: var(--text-muted);
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+    }
+
+    .loading { color: var(--text-muted); font-family: sans-serif; }
+
+    /* ===== Кнопка переключения темы ===== */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* SVG-иконки в кнопке темы */
+    .theme-toggle .theme-svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .theme-toggle:hover .theme-svg {
+      transform: rotate(-15deg) scale(1.08);
+    }
+
+    /* По умолчанию (светлая тема) — видна луна */
+    .theme-toggle .theme-svg--sun { display: none; }
+    .theme-toggle .theme-svg--moon { display: block; }
+
+    /* Тёмная тема — видно солнце */
+    html[data-theme="dark"] .theme-toggle .theme-svg--sun { display: block; }
+    html[data-theme="dark"] .theme-toggle .theme-svg--moon { display: none; }
+
+    @media (max-width: 600px) {
+      body { padding: 32px 16px 64px; }
+      .theme-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
+    }
+
+     /* По умолчанию (светлая тема) — видна луна */
+    .theme-toggle .theme-svg--sun { display: none; }
+    .theme-toggle .theme-svg--moon { display: block; }
+
+    /* Тёмная тема — видно солнце */
+    html[data-theme="dark"] .theme-toggle .theme-svg--sun { display: block; }
+    html[data-theme="dark"] .theme-toggle .theme-svg--moon { display: none; }
+
+    /* ===== Кнопка «Наверх» ===== */
+    .scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 90;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-sm);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+    }
+    .scroll-top svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Появление */
+    .scroll-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    }
+
+    /* Ховер — лёгкий подъём стрелки и цветной фон */
+    .scroll-top:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    }
+    .scroll-top:hover svg {
+    transform: translateY(-2px);
+    }
+
+    /* Нажатие */
+    .scroll-top:active {
+    transform: translateY(-1px) scale(0.96);
+    }
+
+    /* На мобильных — ближе к краю */
+    @media (max-width: 600px) {
+    .scroll-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    .scroll-top svg { width: 18px; height: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+    <svg class="theme-svg theme-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="theme-svg theme-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <a href="../../articles.html" class="back">← Все статьи</a>
+
+  <div id="content" class="loading">Загружаю текст…</div>
+     <!-- ↓ Кнопка «Наверх» -->
+  <button id="scroll-top" class="scroll-top" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5"/>
+      <path d="M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script>
+    // ===== Тема: применяем ДО первой отрисовки, чтобы не было "мигания" =====
+    (function applyThemeEarly() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+
+    // ===== Кнопка переключения (без смены иконки — её переключает CSS) =====
+    (function initThemeToggle() {
+      const btn = document.getElementById('theme-toggle');
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+
+      // Если пользователь ещё не выбирал тему вручную — реагируем на системную
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+      });
+    })();
+
+    // ===== Загрузка и парсинг статьи =====
+    const FILE = 'anxiety.txt';
+
+    function renderText(raw) {
+      raw = raw.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+
+      const lines = raw.split('\n');
+      let html = '';
+      let inList = false;
+      let firstHeadingDone = false;
+
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) {
+          if (inList) { html += '</ul>'; inList = false; }
+          continue;
+        }
+
+        if (/^###/.test(line)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<h3>${inline(line.replace(/^#+\s*/, ''))}</h3>`;
+          continue;
+        }
+
+        if (/^##/.test(line)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          const text = inline(line.replace(/^#+\s*/, ''));
+          if (!firstHeadingDone) {
+            html += `<h1>${text}</h1>`;
+            firstHeadingDone = true;
+          } else {
+            html += `<h2>${text}</h2>`;
+          }
+          continue;
+        }
+
+        const authorMatch = line.match(/^\[author:([^|\]]+)(?:\|([^\]]+))?\]$/);
+        if (authorMatch) {
+          if (inList) { html += '</ul>'; inList = false; }
+          const name = authorMatch[1].trim();
+          const role = authorMatch[2] ? authorMatch[2].trim() : '';
+          html += `<div class="author-line">${name}${role ? `<span class="author-role">${role}</span>` : ''}</div>`;
+          continue;
+        }
+
+        const imgMatch = line.match(/^\[img:([^\]]+)\]$/);
+        if (imgMatch) {
+          if (inList) { html += '</ul>'; inList = false; }
+          const src = `../images/${imgMatch[1].trim()}`;
+          html += `<figure><img src="${src}" alt=""><figcaption></figcaption></figure>`;
+          continue;
+        }
+
+        if (line.startsWith('- ')) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += `<li>${inline(line.slice(2))}</li>`;
+          continue;
+        }
+
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<p>${inline(line)}</p>`;
+      }
+
+      if (inList) html += '</ul>';
+      return html;
+    }
+
+    function inline(text) {
+      text = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      text = text.replace(
+        /(https?:\/\/[^\s<]+)/g,
+        '<a href="$1" target="_blank" rel="noopener">$1</a>'
+      );
+
+      return text;
+    }
+
+    fetch(FILE)
+      .then(r => r.text())
+      .then(raw => {
+        const el = document.getElementById('content');
+        el.classList.remove('loading');
+        el.innerHTML = renderText(raw);
+      })
+      .catch(err => {
+        document.getElementById('content').textContent = 'Не удалось загрузить статью: ' + err.message;
+      });
+      // ===== Кнопка «Наверх» =====
+    (function initScrollTop() {
+        const btn = document.getElementById('scroll-top');
+        if (!btn) return;
+
+        function updateVisibility() {
+            if (window.scrollY > 320) {
+            btn.classList.add('is-visible');
+            } else {
+            btn.classList.remove('is-visible');
+            }
+        }
+
+        // Показываем/скрываем при скролле
+        window.addEventListener('scroll', updateVisibility, { passive: true });
+        updateVisibility(); // проверить сразу при загрузке
+
+        // Плавный скролл наверх
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мои статьи — Светлакова Наталья</title>
+  <meta name="description" content="Статьи по психологии, психосоматике и семейным сценариям. Автор — Светлакова Наталья.">
+  <meta property="og:title" content="Мои статьи — Светлакова Наталья">
+  <meta property="og:description" content="Статьи по психологии, психосоматике и семейным сценариям.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://natalyasvetlakova.github.io/psychology-certificates/articles.html">
+  <meta property="og:image" content="https://natalyasvetlakova.github.io/psychology-certificates/preview.jpg">
+
+  <style>
+    :root {
+      --bg: #fcfaf7;
+      --bg-card: #ffffff;
+      --text: #2b2b2b;
+      --text-muted: #6b6b6b;
+      --primary: #b72e4a;
+      --primary-dark: #8a1f36;
+      --primary-soft: #f4e3e7;
+      --gold: #c9a961;
+      --border: #ece5dd;
+      --radius: 16px;
+      --shadow-sm: 0 2px 10px rgba(80, 60, 40, 0.06);
+      --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 48px 24px 80px;
+      line-height: 1.6;
+      background-image:
+        radial-gradient(circle at 10% 0%, rgba(183, 46, 74, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 100%, rgba(201, 169, 97, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 40px; }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--primary);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      margin: 0 0 12px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin: 0 auto;
+      max-width: 560px;
+    }
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--primary);
+      margin: 24px auto 0;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    /* Навигация */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 1.5px solid transparent;
+    }
+    .nav a.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(183, 46, 74, 0.3);
+    }
+    .nav a:not(.active) {
+      background: var(--bg-card);
+      color: var(--primary);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav a:not(.active):hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+   
+    /* Сетка — как у сертификатов */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    /* Карточка статьи — один-в-один как .cert-card */
+    .article-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease;
+    }
+    .article-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(183, 46, 74, 0.25);
+    }
+
+    /* Превью — 4/3, как у сертификатов */
+    .article-thumb {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: var(--primary-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    /* Внутренняя золотая рамка-паспарту */
+    .article-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(201, 169, 97, 0.35);
+      border-radius: 8px;
+      pointer-events: none;
+      transition: border-color 0.4s ease, inset 0.4s ease;
+      z-index: 2;
+    }
+    .article-card:hover .article-thumb::before {
+      border-color: rgba(201, 169, 97, 0.9);
+      inset: 6px;
+    }
+
+    .article-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(80, 60, 40, 0.12);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s ease;
+      z-index: 1;
+    }
+    .article-card:hover .article-thumb img {
+      transform: scale(1.04);
+      box-shadow: 0 12px 30px rgba(80, 60, 40, 0.22);
+    }
+
+    /* Плашка «СТАТЬЯ» — аналог .cert-type */
+    .article-type {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: 4px 9px;
+      border-radius: 100px;
+      border: 1px solid rgba(183, 46, 74, 0.15);
+      text-transform: uppercase;
+    }
+
+    /* Плашка с датой — аналог .cert-hours (золото-бордовая) */
+    .article-date-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px 5px 8px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px) saturate(1.4);
+      -webkit-backdrop-filter: blur(10px) saturate(1.4);
+      border: 1px solid rgba(201, 169, 97, 0.55);
+      box-shadow:
+        0 4px 14px rgba(140, 100, 40, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #6b4a17;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.2px;
+      line-height: 1;
+      pointer-events: none;
+      transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+    }
+    .article-date-badge__icon {
+      font-size: 0.9em;
+      line-height: 1;
+      color: #b8892b;
+      filter: drop-shadow(0 0 3px rgba(184, 137, 43, 0.35));
+    }
+    .article-card:hover .article-date-badge {
+      transform: translateY(-2px) scale(1.05);
+      border-color: rgba(201, 169, 97, 0.95);
+      box-shadow:
+        0 8px 22px rgba(140, 100, 40, 0.28),
+        0 0 22px rgba(201, 169, 97, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    /* Информация под картинкой */
+    .article-info {
+      padding: 16px 18px 18px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .article-title {
+      font-family: Georgia, serif;
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin: 0;
+      line-height: 1.35;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .article-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Круглая стрелка «открыть» — как .cert-open */
+    .article-open {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 3;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      box-shadow: 0 6px 16px rgba(183, 46, 74, 0.4);
+    }
+    .article-card:hover .article-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading, .error {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+      font-size: 1rem;
+    }
+    .loading::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 20px;
+      border: 3px solid var(--primary-soft);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: var(--primary); }
+
+    /* Кнопка темы */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);      
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Тёмная тема */
+    html[data-theme="dark"] {
+      --bg: #171412;
+      --bg-card: #211c19;
+      --text: #ece6e2;
+      --text-muted: #a09a95;
+      --border: #322b27;
+      --primary: #e6889a;
+      --primary-dark: #c96d80;
+      --primary-soft: rgba(230, 136, 154, 0.15);
+      --gold: #d4b274;
+    }
+    html[data-theme="dark"] body {
+      background-image:
+        radial-gradient(circle at 10% 0%, rgba(230, 136, 154, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 100%, rgba(212, 178, 116, 0.05) 0%, transparent 40%);
+    }
+    html[data-theme="dark"] .article-type {
+      background: rgba(33, 28, 25, 0.85);
+      color: var(--primary);
+      border-color: rgba(230, 136, 154, 0.25);
+    }
+    html[data-theme="dark"] .article-date-badge {
+      background: rgba(33, 28, 25, 0.85);
+      color: #e8c98a;
+      border-color: rgba(212, 178, 116, 0.45);
+      box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    html[data-theme="dark"] .article-date-badge__icon {
+      color: #e8c98a;
+      filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
+    }
+    html[data-theme="dark"] .article-card:hover .article-date-badge {
+      border-color: rgba(232, 201, 138, 0.9);
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(232, 201, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 28px 16px 60px; }
+      header { margin-bottom: 32px; }
+      .nav { margin-bottom: 32px; }
+      .gallery {
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+      .article-info { padding: 14px 14px 16px; }
+      .article-title { font-size: 0.95rem; }
+    }
+
+    /* По умолчанию (светлая тема) — видна луна */
+    .theme-toggle .theme-svg--sun { display: none; }
+    .theme-toggle .theme-svg--moon { display: block; }
+
+    /* Тёмная тема — видно солнце */
+    html[data-theme="dark"] .theme-toggle .theme-svg--sun { display: block; }
+    html[data-theme="dark"] .theme-toggle .theme-svg--moon { display: none; }
+    /* ===== Кнопка «Наверх» ===== */
+    .scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 90;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-sm);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+    }
+    .scroll-top svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Появление */
+    .scroll-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    }
+
+    /* Ховер — лёгкий подъём стрелки и цветной фон */
+    .scroll-top:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    }
+    .scroll-top:hover svg {
+    transform: translateY(-2px);
+    }
+
+    /* Нажатие */
+    .scroll-top:active {
+    transform: translateY(-1px) scale(0.96);
+    }
+
+    /* На мобильных — ближе к краю */
+    @media (max-width: 600px) {
+    .scroll-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    .scroll-top svg { width: 18px; height: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+    <svg class="theme-svg theme-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="theme-svg theme-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+
+  <div class="container">
+    <header>
+      <h1>Мои статьи по психологии и психосоматике</h1>
+      <p class="subtitle">Светлакова Наталья</p>
+      <div class="divider"></div>
+    </header>
+
+    <nav class="nav">
+    <a href="index.html">
+        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 3h12a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+        <path d="M8 7h8M8 10.5h8M8 14h5"/>
+        <circle cx="12" cy="19" r="2.2"/>
+        <path d="M10.6 20.6 10 23l2-1 2 1-.6-2.4"/>
+        </svg>
+        <span>Сертификаты</span>
+    </a>
+    <a href="articles.html" class="active">
+        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/>
+        <path d="M14 3v5h5"/>
+        <path d="M8 13h8M8 17h5"/>
+        </svg>
+        <span>Статьи</span>
+    </a>
+    </nav>
+
+    <div class="gallery" id="gallery">
+      <div class="loading">Загружаю статьи…</div>
+    </div>
+  </div>
+   <!-- ↓ Кнопка «Наверх» -->
+  <button id="scroll-top" class="scroll-top" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5"/>
+      <path d="M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+  <script>
+    // Переключатель темы
+    (function initTheme() {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+
+        const btn = document.getElementById('theme-toggle');
+        btn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    })();
+
+    const gallery = document.getElementById('gallery');
+
+    // Короткая дата: "20.09.2026"
+    function shortDate(iso) {
+      const d = new Date(iso);
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}.${mm}.${yyyy}`;
+    }
+
+    // Заглушка, если картинки нет
+    const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">' +
+      '<rect fill="#f4e3e7" width="400" height="300"/>' +
+      '<text x="50%" y="50%" fill="#b72e4a" font-family="Georgia" font-size="22" ' +
+      'text-anchor="middle" dy=".3em">Статья</text></svg>'
+    );
+
+    async function loadArticles() {
+      try {
+        const res = await fetch('articles.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const articles = await res.json();
+
+        if (!articles.length) {
+          gallery.innerHTML = '<div class="error">Пока нет статей.</div>';
+          return;
+        }
+
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        gallery.innerHTML = articles.map(a => `
+          <a href="${a.url}" class="article-card">
+            <span class="article-type">Статья</span>
+            <span class="article-date-badge" title="Дата публикации">
+              <span class="article-date-badge__icon" aria-hidden="true">📅</span>
+              <span>${shortDate(a.date)}</span>
+            </span>
+            <div class="article-thumb">
+              <img src="${a.image || ''}" alt="${a.title}" loading="lazy"
+                   onerror="this.onerror=null;this.src='${PLACEHOLDER}'">
+            </div>
+            <div class="article-info">
+              <h3 class="article-title">${a.title}</h3>
+              ${a.description ? `<p class="article-meta">${a.description}</p>` : ''}
+            </div>
+            <span class="article-open" aria-hidden="true">↗</span>
+          </a>
+        `).join('');
+      } catch (err) {
+        gallery.innerHTML = `<div class="error">Не удалось загрузить статьи.<br>${err.message}</div>`;
+      }
+    }
+
+    loadArticles();
+    // ===== Кнопка «Наверх» =====
+    (function initScrollTop() {
+        const btn = document.getElementById('scroll-top');
+        if (!btn) return;
+
+        function updateVisibility() {
+            if (window.scrollY > 320) {
+            btn.classList.add('is-visible');
+            } else {
+            btn.classList.remove('is-visible');
+            }
+        }
+
+        // Показываем/скрываем при скролле
+        window.addEventListener('scroll', updateVisibility, { passive: true });
+        updateVisibility(); // проверить сразу при загрузке
+
+        // Плавный скролл наверх
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+  </script>
+</body>
+</html>

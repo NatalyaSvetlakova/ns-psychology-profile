@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сертификаты по психологии и психосоматике - Наталья Светлакова</title>
+  <style>
+    :root {
+      --bg: #fcfaf7;
+      --bg-card: #ffffff;
+      --text: #2b2b2b;
+      --text-muted: #6b6b6b;
+      --primary: #b72e4a;
+      --primary-soft: #f4e3e7;
+      --gold: #c9a961;
+      --paper: linear-gradient(135deg, #fdfaf5 0%, #f4ebe0 100%);
+      --border: #ece5dd;
+      --radius: 18px;
+      --shadow-sm: 0 2px 10px rgba(80, 60, 40, 0.06);
+      --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 48px 24px 80px;
+      line-height: 1.55;
+      background-image:
+        radial-gradient(circle at 10% 0%, rgba(183, 46, 74, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 100%, rgba(201, 169, 97, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 56px; }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--primary);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      margin: 0 0 12px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin: 0 auto;
+      max-width: 560px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--primary);
+      margin: 24px auto 0;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .cert-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(183, 46, 74, 0.2);
+    }
+
+    /* Превью — 3/4, ни портрет, ни пейзаж не режутся */
+    .cert-thumb {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Внутренняя золотая рамка-паспарту */
+    .cert-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(201, 169, 97, 0.35);
+      border-radius: 8px;
+      pointer-events: none;
+      transition: border-color 0.4s ease, inset 0.4s ease;
+    }
+
+    .cert-card:hover .cert-thumb::before {
+      border-color: rgba(201, 169, 97, 0.9);
+      inset: 6px;
+    }
+
+    .cert-thumb img,
+    .cert-thumb iframe {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(80, 60, 40, 0.12);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s ease;
+      z-index: 1;
+    }
+
+    .cert-card:hover .cert-thumb img,
+    .cert-card:hover .cert-thumb iframe {
+      transform: scale(1.04);
+      box-shadow: 0 12px 30px rgba(80, 60, 40, 0.22);
+    }
+
+    .cert-info {
+      padding: 16px 18px 18px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cert-title {
+      font-family: Georgia, serif;
+      font-weight: 500;
+      font-size: 1.02rem;
+      margin: 0;
+      line-height: 1.35;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cert-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Плашка типа файла */
+    .cert-type {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: 4px 9px;
+      border-radius: 100px;
+      border: 1px solid rgba(183, 46, 74, 0.15);
+      text-transform: uppercase;
+    }
+
+    /* Круглая стрелка «открыть» */
+    .cert-open {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      box-shadow: 0 6px 16px rgba(183, 46, 74, 0.35);
+    }
+
+    .cert-card:hover .cert-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+      font-size: 1rem;
+    }
+
+    .loading::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 20px;
+      border: 3px solid var(--primary-soft);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error { color: var(--primary); }
+
+    /* ===== Метка «часов обучения» ===== */
+.cert-hours {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 5px 10px 5px 8px;
+  border-radius: 100px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+
+  border: 1px solid rgba(201, 169, 97, 0.55);
+  box-shadow:
+    0 4px 14px rgba(140, 100, 40, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  color: #6b4a17;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+  line-height: 1;
+
+  pointer-events: none;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.cert-hours__icon {
+  font-size: 0.9em;
+  line-height: 1;
+  color: #b8892b;
+  filter: drop-shadow(0 0 3px rgba(184, 137, 43, 0.35));
+}
+
+.cert-hours__value {
+  letter-spacing: 0.3px;
+}
+
+.cert-card:hover .cert-hours {
+  transform: translateY(-2px) scale(1.05);
+  border-color: rgba(201, 169, 97, 0.95);
+  box-shadow:
+    0 8px 22px rgba(140, 100, 40, 0.28),
+    0 0 22px rgba(201, 169, 97, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Тёмная тема — та же логика, что у .cert-type */
+   
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #171412;
+        --bg-card: #211c19;
+        --text: #ece6e2;
+        --text-muted: #a09a95;
+        --border: #322b27;
+        --paper: linear-gradient(135deg, #2a231e 0%, #1f1a17 100%);
+        --primary-soft: rgba(230, 136, 154, 0.15);
+        --primary: #e6889a;
+        --gold: #d4b274;
+      }
+      body {
+        background-image:
+          radial-gradient(circle at 10% 0%, rgba(230, 136, 154, 0.06) 0%, transparent 40%),
+          radial-gradient(circle at 90% 100%, rgba(212, 178, 116, 0.05) 0%, transparent 40%);
+      }
+      .cert-type {
+        background: rgba(33, 28, 25, 0.85);
+        color: var(--primary);
+        border-color: rgba(230, 136, 154, 0.25);
+      }
+    }
+ 
+    .cert-hours {
+        background: rgba(33, 28, 25, 0.85);
+        color: #e8c98a;
+        border-color: rgba(212, 178, 116, 0.45);
+        box-shadow:
+            0 4px 14px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .cert-hours__icon {
+        color: #e8c98a;
+        filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
+        }
+        .cert-card:hover .cert-hours {
+        border-color: rgba(232, 201, 138, 0.9);
+        box-shadow:
+            0 8px 22px rgba(0, 0, 0, 0.55),
+            0 0 24px rgba(232, 201, 138, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+    @media (max-width: 600px) {
+      body { padding: 28px 16px 60px; }
+      header { margin-bottom: 36px; }
+      .gallery {
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+      .cert-info { padding: 14px 14px 16px; }
+      .cert-title { font-size: 0.95rem; }
+    }
+    /* Кнопка переключения темы */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);      
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Ручная тёмная тема (когда пользователь нажал кнопку) */
+    html[data-theme="dark"] {
+      --bg: #171412;
+      --bg-card: #211c19;
+      --text: #ece6e2;
+      --text-muted: #a09a95;
+      --border: #322b27;
+      --paper: linear-gradient(135deg, #2a231e 0%, #1f1a17 100%);
+      --primary-soft: rgba(230, 136, 154, 0.15);
+      --primary: #e6889a;
+      --primary-dark: #c96d80;
+      --gold: #d4b274;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.6);
+    }
+    html[data-theme="dark"] body {
+      background-image:
+        radial-gradient(circle at 10% 0%, rgba(230, 136, 154, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 100%, rgba(212, 178, 116, 0.05) 0%, transparent 40%);
+    }
+    html[data-theme="dark"] .cert-type {
+      background: rgba(33, 28, 25, 0.85);
+      color: var(--primary);
+      border-color: rgba(230, 136, 154, 0.25);
+    }
+    html[data-theme="dark"] .cert-hours {
+      background: rgba(33, 28, 25, 0.85);
+      color: #e8c98a;
+      border-color: rgba(212, 178, 116, 0.45);
+      box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    html[data-theme="dark"] .cert-hours__icon {
+      color: #e8c98a;
+      filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
+    }
+    html[data-theme="dark"] .cert-card:hover .cert-hours {
+      border-color: rgba(232, 201, 138, 0.9);
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(232, 201, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    /* Навигация */
+  .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 1.5px solid transparent;
+    }
+    .nav a.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(14, 107, 168, 0.3);
+    }
+    .nav a:not(.active) {
+      background: var(--bg-card);
+      color: var(--primary);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav a:not(.active):hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    /* Иконки навигации */
+    .nav .nav-svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav a:hover .nav-svg {
+      transform: translateY(-1px) scale(1.08);
+    }
+
+    /* Иконка в кнопке темы */
+    .theme-toggle .theme-svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+    .theme-toggle:hover .theme-svg {
+      transform: rotate(-15deg) scale(1.08);
+    }
+    /* Иконки навигации */
+    .nav .nav-svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav a:hover .nav-svg {
+      transform: translateY(-1px) scale(1.08);
+    }
+
+    /* Иконка в кнопке темы */
+    .theme-toggle .theme-svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+    .theme-toggle:hover .theme-svg {
+      transform: rotate(-15deg) scale(1.08);
+    }
+    /* По умолчанию (светлая тема) — видна луна */
+    .theme-toggle .theme-svg--sun { display: none; }
+    .theme-toggle .theme-svg--moon { display: block; }
+
+    /* Тёмная тема — видно солнце */
+    html[data-theme="dark"] .theme-toggle .theme-svg--sun { display: block; }
+    html[data-theme="dark"] .theme-toggle .theme-svg--moon { display: none; }
+    /* ===== Кнопка «Наверх» ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      cursor: pointer;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+    }
+    .scroll-top svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Появление */
+    .scroll-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Ховер — лёгкий подъём стрелки и цветной фон */
+    .scroll-top:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .scroll-top:hover svg {
+      transform: translateY(-2px);
+    }
+
+    /* Нажатие */
+    .scroll-top:active {
+      transform: translateY(-1px) scale(0.96);
+    }
+
+    /* На мобильных — ближе к краю */
+    @media (max-width: 600px) {
+      .scroll-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+      }
+      .scroll-top svg { width: 18px; height: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+        <svg class="theme-svg theme-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+        </svg>
+        <svg class="theme-svg theme-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+      <h1>Мои сертификаты по психологии и психосоматике</h1>
+      <p class="subtitle">Светлакова Наталья</p>
+      <div class="divider"></div>
+    </header>
+      <nav class="nav">
+        <a href="index.html" class="active">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 3h12a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+            <path d="M8 7h8M8 10.5h8M8 14h5"/>
+            <circle cx="12" cy="19" r="2.2"/>
+            <path d="M10.6 20.6 10 23l2-1 2 1-.6-2.4"/>
+          </svg>
+          <span>Сертификаты</span>
+        </a>
+        <a href="articles.html">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/>
+            <path d="M14 3v5h5"/>
+            <path d="M8 13h8M8 17h5"/>
+          </svg>
+          <span>Статьи</span>
+        </a>
+      </nav>
+    <div class="gallery" id="gallery">
+      <div class="loading">Загружаю сертификаты…</div>
+    </div>
+  </div>
+   <!-- ↓ Кнопка «Наверх» -->
+  <button id="scroll-top" class="scroll-top" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5"/>
+      <path d="M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script>
+    const OWNER  = 'NatalyaSvetlakova';
+    const REPO   = 'psychology-certificates';
+    const FOLDER = 'certificates';
+
+    const IMAGE_EXT = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'jfif', 'bmp'];
+    const PDF_EXT   = ['pdf'];
+
+    // Красивые названия: имя файла без расширения → что показывать
+    const TITLES = {
+    //  'diplom_1': 'Диплом «Практическая психология»',
+    //  'diplom_2': 'Диплом «Психологическое консультирование»',
+    //  'diplom_3': 'Диплом «Психологическая коррекция психосоматических заболеваний»',
+      'certificate_30.04.24': 'Сертификат «Как помогать клиентам находить призвание»',
+      'certificate_27.06.24': 'Сертификат «Ты взрослый - тебе решать»',
+      'certificate_27.03.24': 'Сертификат «Каки зачем в арт-терапиииспользовать современные цифровые технологии»',
+      'certificate_27.02.24': 'Сертификат «Арт-диагностика в работе с детьми и семьями»',
+      'certificate_26.12.23': 'Сертификат «Волшебный камень: арт-терапия для поиска опор, ресурсов и смыслов»',
+      'certificate_26.01.24': 'Сертификат «Собираемся в дорогу, собираем чемодан»',
+      'certificate_25.04.24': 'Сертификат «Сказкотерапия»',
+      'certificate_25.02.24': 'Сертификат «Женские архетипы: раскрой свою силу»',
+      'certificate_24.06.24': 'Сертификат «Деньги, карьера, бизнес»',
+      'certificate_24.01.24': 'Сертификат «Управление стрессом: антихрупкость»',
+      'certificate_23.04.24': 'Сертификат «Здравствуй, Я. Как найти смысл жизни, призвание и раскрыть свой потенциал на максимум»',
+      'certificate_23.01.24': 'Сертификат «Арт-терапия в работе с эмоциями и чувствами»',
+      'certificate_22.02.24': 'Сертификат «Психосоматика»',
+      'certificate_21.05.26': 'Сертификат «Психосоматика: базовый курс»',
+      'certificate_09.07.24': 'Сертификат «2 причины, почему современная профориентация нужна всем помогающим практикам»',
+      'certificate_19.06.24': 'Сертификат «Как стать мастером эмоций»',
+      'certificate_19.04.24': 'Сертификат «Психология денежного мышления»',
+      'certificate_19.02.26': 'Сертификат «Детские травмы в теле взрослого человека: телесно-ориентированный подход в работе психолога»',
+      'certificate_18.04.24': 'Сертификат «ТАРО: от эзотерики до арт-терапии»',
+      'certificate_17.07.24': 'Сертификат «Архетипы и МАК»',
+      'certificate_16.04.24': 'Сертификат «От хандры до влюбленности. Арт-тнрапия с весенними эмоциями»',
+      'certificate_15.07.24': 'Сертификат «Психологическое консультирование с применением игротерапии и метафорических ассоциативных карт»',
+      'certificate_15.02.24': 'Сертификат «10 практических инструментов для современного арт-терапевта»',
+      'certificate_14.02.24': 'Сертификат «Разреши себе звучать»',
+      'certificate_13.08.24': 'Сертификат «Арт-терапия: чудо или наука»',
+      'certificate_13.05.24': 'Сертификат «Таро в арт-терапии и консультировании»',
+      'certificate_13.03.24': 'Сертификат «SoulCollage - волшебная трансформация журнальной картинки в послание души»',
+      'certificate_12.06.24': 'Сертификат «Как жить с травмой? Как быть с травмой?»',
+      'certificate_12.04.24': 'Сертификат «Сила метафоры в работе психолога»',
+      'certificate_11.07.24': 'Сертификат «4 причины выгорания и как из него выйти?»',
+      'certificate_10.05.24': 'Сертификат «Арт-терапия сегодня: арт-терапия в образовании, медицине, социальной сфере»',
+      'certificate_08.05.24': 'Сертификат «Маска в арт-терапии как ключ к откровениям души»',
+      'certificate_06.04.24': 'Сертификат «Арт-терапия: просто о сложном»',
+      'certificate_06.03.24': 'Сертификат «Территория счастливых женщин»',
+      'certificate_06.02.24': 'Сертификат «Психосоматика и психология телесности: основные проблемыи связь с медицинской практикой»',
+      'certificate_04.05.24': 'Сертификат «Волшебный камень»',
+      'certificate_04.07.24': 'Сертификат мастера психологической трансформационной игры «В тени своей тени»',
+      'certificate_03.05.24': 'Сертификат «Характерология для арт-терапевта: что это такое и как она может сделать работу эффективнее»',
+      'certificate_01.09.25': 'Сертификат «Все про (не)лишний вес»',
+      'certificate_01.08.25': 'Аттестат «Базовый курс подготовки регрессологов»',
+      'certificate_01.07.25': 'Сертификат «Базовый курс подготовки регрессолога»',
+      'certificate__26.01.24': 'Сертификат «Ресурсы внутреннего ребенка»',
+    };
+
+    // Метаданные: имя файла без расширения → «кто выдал · год»
+    const META = {
+    //  'diplom_1': 'АНО ВО «Европейский Университет „Бизнес Треугольник“» · 2023-2024',
+    //  'diplom_2': 'ООО «Евразийская Академия Современного Образования» · 2024',
+    //  'diplom_3': 'АНПОО «Колледж практической психологии» · 2026',
+      'certificate_30.04.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
+      'certificate_27.06.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
+      'certificate_27.03.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_27.02.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_26.12.23': 'Международная Школа Арт-терапии · 2023',
+      'certificate_26.01.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_25.04.24': 'Новая академия практической психологии · 2024',
+      'certificate_25.02.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_24.06.24': 'Новая академия практической психологии · 2024',
+      'certificate_24.01.24': 'Новая академия практической психологии · 2024',
+      'certificate_21.05.26': 'Высшие курсы практической психологии · 2024',
+      'certificate_23.04.24': 'Новая академия практической психологии · 2024',
+      'certificate_23.01.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_22.02.24': 'Новая академия практической психологии · 2024',
+      'certificate_21.05.26': 'Высшие курсы практической психологии · 2026',
+      'certificate_21.05.24': 'Новая академия практической психологии · 2024',
+      'certificate_09.07.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
+      'certificate_19.06.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_09.07.25': 'Новая академия практической психологии · 2024',
+      'certificate_19.02.26': 'Академия практической психологии «Псиинтеллект» · 2026',
+      'certificate_19.04.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_17.07.24': 'Новая академия практической психологии · 2024',
+      'certificate_16.04.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_15.07.24': 'Новая академия практической психологии · 2024',
+      'certificate_15.02.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_14.02.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_13.08.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_13.05.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_13.03.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_12.06.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_12.04.24': 'Новая академия практической психологии · 2024',
+      'certificate_11.07.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
+      'certificate_10.05.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_08.05.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_06.04.24': 'Международная Школа Арт-терапии · 2024 · 2024',
+      'certificate_06.03.24': 'Новая академия практической психологии · 2024',
+      'certificate_06.02.24': 'Портал непрерывного медицинского и фармацевтического образования МЗ РФ · 2024',
+      'certificate_04.05.24': 'Международная Школа Арт-терапии · 2024 · 2024',
+      'certificate_03.07.24': 'Новая академия практической психологии · 2024',
+      'certificate_03.05.24': 'Международная Школа Арт-терапии · 2024',
+      'certificate_01.09.25': 'Центр «Инфогармония» · 2025',
+      'certificate_01.08.25': 'Центр «Инфогармония» · 2025',
+      'certificate_01.07.25': 'Центр «Инфогармония» · 2025',
+      'certificate__26.01.24': 'Новая академия практической психологии · 2024',
+    };
+
+    // Часы обучения: имя файла без расширения → число часов
+    const HOURS = {        
+        // 'certificate_03.05.24': 144,
+      //  'diplom_1': 700,
+      //  'diplom_2': 256,
+      //  'diplom_3': 360,
+        'certificate_30.04.24': 2.5,
+        'certificate_27.06.24': 2.5,
+        'certificate_27.03.24': 2,
+        'certificate_27.02.24': 2,
+        'certificate_26.12.23': 2,
+        'certificate_26.01.24': 2,
+        'certificate_25.04.24': 18,
+        'certificate_25.02.24': 2,
+        'certificate_24.06.24': 4,
+        'certificate_24.01.24': 2.5,
+        'certificate_23.04.24': 2.5,
+        'certificate_23.01.24': 2,
+        'certificate_22.02.24': 18,
+        'certificate_21.05.26': 10,
+        'certificate_21.05.24': 2.5,
+        'certificate_06.02.24': 2.5,
+        'certificate_09.07.24': 2.5,
+        'certificate_19.06.24': 2,
+        'certificate_19.04.24': 2.5,
+        'certificate_19.02.26': 2,
+        'certificate_18.04.24': 2,
+        'certificate_17.07.24': 8,
+        'certificate_16.04.24': 2,
+        'certificate_15.07.24': 256,
+        'certificate_15.02.24': 12,
+        'certificate_14.02.24': 2,
+        'certificate_13.08.24': 2,
+        'certificate_13.05.24': 30, 
+        'certificate_13.03.24': 2,
+        'certificate_12.06.24': 2,
+        'certificate_12.04.24': 2.5,
+        'certificate_11.07.24': 2.5,
+        'certificate_10.05.24': 8,
+        'certificate_08.05.24': 2,
+        'certificate_06.04.24': 2,
+        'certificate_06.03.24': 2.5,
+        'certificate_06.02.24': 2,
+        'certificate_04.05.24': 2,
+        'certificate_03.07.24': 2,
+        'certificate_03.05.24': 2,
+        'certificate_01.09.25': 2,
+        'certificate_01.08.25': 80,
+        'certificate_01.07.25': 80,
+        'certificate__26.01.24': 2,
+    };
+
+    const gallery = document.getElementById('gallery');
+
+    function getExt(name) {
+      const i = name.lastIndexOf('.');
+      return i === -1 ? '' : name.slice(i + 1).toLowerCase();
+    }
+
+    function getBase(name) {
+      const i = name.lastIndexOf('.');
+      return i === -1 ? name : name.slice(0, i);
+    }
+
+    // Умный humanize: certificate_01.07.25 → «Сертификат · 01.07.2025»
+    function humanize(name) {
+      const m = name.match(/^certificate[_\-\s]+(\d{2})\.(\d{2})\.(\d{2})$/i);
+      if (m) {
+        const [, d, mo, y] = m;
+        return `Сертификат · ${d}.${mo}.20${y}`;
+      }
+      return name
+        .replace(/[-_]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .replace(/^\w/, c => c.toUpperCase());
+    }
+
+    function encodePath(p) {
+      return p.split('/').map(encodeURIComponent).join('/');
+    }
+
+    // ===== Переключатель темы =====
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+
+      const btn = document.getElementById('theme-toggle');
+      
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);        
+      });
+    })();
+
+    async function loadCertificates() {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FOLDER}`;
+
+      let files;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('GitHub API: ' + res.status);
+        files = await res.json();
+      } catch (err) {
+        gallery.innerHTML = `<div class="error">Не удалось загрузить сертификаты.<br>${err.message}</div>`;
+        return;
+      }
+
+      if (!Array.isArray(files) || files.length === 0) {
+        gallery.innerHTML = `<div class="error">В папке «${FOLDER}» пока нет файлов.</div>`;
+        return;
+      }
+
+      const certs = files.filter(f => f.type === 'file' && (
+        IMAGE_EXT.includes(getExt(f.name)) || PDF_EXT.includes(getExt(f.name))
+      ));
+
+      if (certs.length === 0) {
+        gallery.innerHTML = `<div class="error">Файлы есть, но среди них нет картинок или PDF.</div>`;
+        return;
+      }
+
+      certs.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+
+      gallery.innerHTML = certs.map(file => {
+        const ext = getExt(file.name);
+        const base = getBase(file.name);
+        const isPdf = PDF_EXT.includes(ext);
+        const fileUrl = file.download_url
+          || `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${FOLDER}/${encodePath(file.name)}`;
+
+        const title = TITLES[base] || humanize(base);
+        const meta  = META[base] || '';
+        const typeLabel = isPdf ? 'PDF' : 'IMG';
+        const hours = HOURS[base];
+
+        const thumb = isPdf
+          ? `<iframe src="${fileUrl}#toolbar=0&view=FitH" loading="lazy" title="${title}"></iframe>`
+          : `<img src="${fileUrl}" alt="${title}" loading="lazy">`;
+
+        return `
+          <a href="${fileUrl}" target="_blank" rel="noopener" class="cert-card">
+            <span class="cert-type">${typeLabel}</span>
+            ${hours ? `
+                <span class="cert-hours" title="Объём программы">
+                    <span class="cert-hours__icon" aria-hidden="true">⏱</span>
+                    <span class="cert-hours__value">${hours} ${pluralHours(hours)}</span>
+                </span>
+                ` : ''}
+            <div class="cert-thumb">${thumb}</div>
+            <div class="cert-info">
+              <h3 class="cert-title">${title}</h3>
+              ${meta ? `<p class="cert-meta">${meta}</p>` : ''}
+            </div>
+            <span class="cert-open" aria-hidden="true">↗</span>
+          </a>
+        `;
+      }).join('');
+    }
+    // Склонение слова «час» по числу
+    function pluralHours(n) {
+    const num = Math.abs(n) % 100;
+    const lastDigit = num % 10;
+
+    if (num >= 11 && num <= 14) return 'часов';
+    if (lastDigit === 1) return 'час';
+    if (lastDigit >= 2 && lastDigit <= 4) return 'часа';
+    return 'часов';
+    }
+    loadCertificates();
+    // ===== Кнопка «Наверх» =====
+    (function initScrollTop() {
+      const btn = document.getElementById('scroll-top');
+      if (!btn) return;
+
+      function updateVisibility() {
+        if (window.scrollY > 320) {
+          btn.classList.add('is-visible');
+        } else {
+          btn.classList.remove('is-visible');
+        }
+      }
+
+      // Показываем/скрываем при скролле
+      window.addEventListener('scroll', updateVisibility, { passive: true });
+      updateVisibility(); // проверить сразу при загрузке
+
+      // Плавный скролл наверх
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
