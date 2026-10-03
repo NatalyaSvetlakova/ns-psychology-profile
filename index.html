@@ -302,31 +302,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-/* Тёмная тема — та же логика, что у .cert-type */
-   
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #171412;
-        --bg-card: #211c19;
-        --text: #ece6e2;
-        --text-muted: #a09a95;
-        --border: #322b27;
-        --paper: linear-gradient(135deg, #2a231e 0%, #1f1a17 100%);
-        --primary-soft: rgba(230, 136, 154, 0.15);
-        --primary: #e6889a;
-        --gold: #d4b274;
-      }
-      body {
-        background-image:
-          radial-gradient(circle at 10% 0%, rgba(230, 136, 154, 0.06) 0%, transparent 40%),
-          radial-gradient(circle at 90% 100%, rgba(212, 178, 116, 0.05) 0%, transparent 40%);
-      }
-      .cert-type {
-        background: rgba(33, 28, 25, 0.85);
-        color: var(--primary);
-        border-color: rgba(230, 136, 154, 0.25);
-      }
-    }
+
  
     .cert-hours {
         background: rgba(33, 28, 25, 0.85);
@@ -632,6 +608,231 @@
       .footer-copy { font-size: 0.85rem; }
       .footer-note { font-size: 0.72rem; }
     }
+    /* ===== Модальное окно сертификата — в стиле психологического проекта ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .modal.is-open { display: flex; }
+
+    /* Тёплая подложка в тон бумажной палитре проекта */
+    .modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(183, 46, 74, 0.22) 0%, transparent 55%),
+        radial-gradient(circle at 80% 100%, rgba(201, 169, 97, 0.18) 0%, transparent 55%),
+        rgba(24, 16, 14, 0.88);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .modal.is-open .modal__backdrop { opacity: 1; }
+
+    .modal__content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .modal.is-open .modal__content { opacity: 1; transform: scale(1); }
+
+    /* Верхняя панель */
+    .modal__header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 22px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Кнопка "Назад" — тёплое стекло с золотым ободком */
+    .modal__back {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      padding: 11px 22px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(252, 250, 247, 0.1);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+      color: #fdfaf5;
+
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .modal__back:hover {
+      background: #fcfaf7;
+      color: var(--primary);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(201, 169, 97, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    /* Обёртка правых кнопок */
+    .modal__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    /* Переключатель темы и крестик */
+    .modal__theme {
+      pointer-events: auto;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(252, 250, 247, 0.1);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+      color: #fdfaf5;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      font-size: 24px;
+      line-height: 1;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .modal__theme:hover {
+      background: #fcfaf7;
+      color: var(--primary);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(201, 169, 97, 0.4);
+    }
+
+    /* Иконки в переключателе темы */
+    .modal__theme .theme-svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .modal__theme:hover .theme-svg { transform: rotate(-15deg) scale(1.08); }
+    .modal__theme .theme-svg--sun { display: none; }
+    .modal__theme .theme-svg--moon { display: block; }
+    html[data-theme="dark"] .modal__theme .theme-svg--sun { display: block; }
+    html[data-theme="dark"] .modal__theme .theme-svg--moon { display: none; }
+
+    /* Тело с контентом */
+    .modal__body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 88px 24px 48px;
+      overflow: auto;
+    }
+
+    /* Картинка сертификата — «паспарту» в тёплой бумаге проекта */
+    .modal__body img {
+      max-width: 100%;
+      max-height: calc(100vh - 160px);
+      width: auto;
+      height: auto;
+      display: block;
+      padding: 10px;
+      background: var(--paper);
+      border: 1px solid rgba(201, 169, 97, 0.5);
+      border-radius: var(--radius);
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+      animation: fadeInImg 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .modal__body img {
+      border-color: rgba(212, 178, 116, 0.45);
+    }
+
+    /* PDF-фрейм */
+    .modal__body iframe {
+      width: 100%;
+      max-width: 1000px;
+      height: calc(100vh - 180px);
+      border: 1px solid rgba(201, 169, 97, 0.35);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+      animation: fadeInImg 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes fadeInImg {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    /* Заглушка PDF-превью в карточке */
+    .cert-thumb-pdf {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--paper);
+      color: var(--primary);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    html[data-theme="dark"] .cert-thumb-pdf {
+      background: var(--paper);
+      color: var(--primary);
+    }
+
+    /* Адаптив */
+    @media (max-width: 600px) {
+      .modal__header { padding: 14px 16px; }
+      .modal__back { padding: 9px 16px; font-size: 0.83rem; }
+      .modal__back svg { width: 16px; height: 16px; }      
+      .modal__theme .theme-svg { width: 18px; height: 18px; }
+      .modal__body { padding: 70px 12px 24px; }
+      .modal__body img {
+        max-height: calc(100vh - 130px);
+        padding: 8px;
+        border-radius: 14px;
+      }
+      .modal__body iframe { height: calc(100vh - 140px); }
+    }
   </style>
 </head>
 <body>
@@ -698,6 +899,39 @@
       <path d="M5 12l7-7 7 7"/>
     </svg>
   </button>
+
+  <!-- ===== Модальное окно для сертификатов ===== -->
+  <div class="modal" id="cert-modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__content" role="dialog" aria-modal="true">
+
+      <!-- Верхняя панель с кнопками -->
+      <div class="modal__header">
+        <button class="modal__back" data-close>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Назад</span>
+        </button>
+
+        <div class="modal__actions">
+          <button class="modal__theme" id="modal-theme-toggle" aria-label="Переключить тему">
+            <svg class="theme-svg theme-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+            <svg class="theme-svg theme-svg--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+          </button>          
+        </div>
+      </div>
+
+      <!-- ⬇⬇⬇ ЭТОГО БЛОКА НЕ ХВАТАЛО ⬇⬇⬇ -->
+      <div class="modal__body" id="cert-modal-body"></div>
+
+    </div>
+  </div>
 
   <script>
     const OWNER  = 'NatalyaSvetlakova';
@@ -932,7 +1166,45 @@
         return;
       }
 
-      certs.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+            // Вспомогательная функция для извлечения даты из имени файла (ДД.ММ.ГГ)
+      function extractDateFromName(name) {
+        const match = name.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
+        if (match) {
+          let day = match[1];
+          let month = match[2];
+          let year = match[3];
+          if (year.length === 2) {
+            year = '20' + year; // Преобразуем 24 в 2024
+          }
+          // Возвращаем время в миллисекундах для сравнения
+          return new Date(`${year}-${month}-${day}`).getTime();
+        }
+        return 0; // Если дата не найдена — отправить в конец
+      }
+
+      // Кастомная сортировка: сначала дипломы, потом сертификаты, внутри — по дате (сначала новые)
+      certs.sort((a, b) => {
+        const nameA = getBase(a.name);
+        const nameB = getBase(b.name);
+
+        const isDiplomA = nameA.startsWith('diplom');
+        const isDiplomB = nameB.startsWith('diplom');
+
+        // 1. Группировка по типу: дипломы идут первыми
+        if (isDiplomA && !isDiplomB) return -1;
+        if (!isDiplomA && isDiplomB) return 1;
+
+        // 2. Внутри одной группы сортируем по дате (от новых к старым)
+        const dateA = extractDateFromName(nameA);
+        const dateB = extractDateFromName(nameB);
+
+        if (dateA !== dateB) {
+          return dateB - dateA; // Сортировка по убыванию (новые сверху)
+        }
+
+        // 3. Если даты совпали или не найдены — сортируем по алфавиту
+        return nameA.localeCompare(nameB, 'ru');
+      });
 
       gallery.innerHTML = certs.map(file => {
         const ext = getExt(file.name);
@@ -947,11 +1219,11 @@
         const hours = HOURS[base];
 
         const thumb = isPdf
-          ? `<iframe src="${fileUrl}#toolbar=0&view=FitH" loading="lazy" title="${title}"></iframe>`
+          ? `<div class="cert-thumb-pdf"><span>PDF</span></div>`
           : `<img src="${fileUrl}" alt="${title}" loading="lazy">`;
 
         return `
-          <a href="${fileUrl}" target="_blank" rel="noopener" class="cert-card">
+          <a href="${fileUrl}" class="cert-card" data-file-url="${fileUrl}" data-file-type="${isPdf ? 'pdf' : 'image'}" data-file-title="${title.replace(/"/g, '&quot;')}">
             <span class="cert-type">${typeLabel}</span>
             ${hours ? `
                 <span class="cert-hours" title="Объём программы">
@@ -1007,6 +1279,98 @@
       const el = document.getElementById('footer-year');
       if (el) el.textContent = new Date().getFullYear();
     })();
+
+        // Ждём, пока HTML полностью загрузится, чтобы модалка точно была в DOM
+    document.addEventListener('DOMContentLoaded', function () {
+
+          // ===== Модальное окно сертификатов =====
+    (function initCertModal() {
+      const modal = document.getElementById('cert-modal');
+      const body  = document.getElementById('cert-modal-body');
+      if (!modal || !body) {
+        console.warn('Модальное окно не найдено в HTML');
+        return;
+      }
+
+      let lastFocused = null;
+
+      function openModal(url, type, title) {
+        lastFocused = document.activeElement;
+        body.innerHTML = '';
+
+        if (type === 'pdf') {
+          const iframe = document.createElement('iframe');
+          iframe.src = url + '#toolbar=0&view=FitH';
+          iframe.title = title || 'PDF';
+          iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
+          body.appendChild(iframe);
+        } else {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = title || '';
+          body.appendChild(img);
+        }
+
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        setTimeout(() => { body.innerHTML = ''; }, 400);
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+
+      // === Главный обработчик: перехватываем клик В ФАЗЕ ЗАХВАТА ===
+      document.addEventListener('click', function (e) {
+        const card = e.target.closest('.cert-card');
+        if (!card) return;
+
+        // Если карточка есть, но data-file-url отсутствует — не мешаем
+        const url = card.getAttribute('data-file-url');
+        if (!url) return;
+
+        // Жёстко останавливаем всё
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        const type  = card.getAttribute('data-file-type') || 'image';
+        const title = card.getAttribute('data-file-title') || '';
+        openModal(url, type, title);
+      }, true); // <--- ВАЖНО: true = фаза захвата, срабатывает раньше, чем ссылка
+
+      // Закрытие по клику на фон / кнопку / крестик
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-close]')) {
+          e.preventDefault();
+          closeModal();
+        }
+      });
+
+          // Переключатель темы внутри модалки
+    const modalThemeBtn = document.getElementById('modal-theme-toggle');
+    if (modalThemeBtn) {
+      modalThemeBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // чтобы клик не ушёл в data-close
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+
+      // Закрытие по Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+    })();
+  });  
   </script>
 </body>
 </html>
