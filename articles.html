@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мои статьи — Светлакова Наталья</title>
+  <title>Авторские публикации по психологии и психосоматике — Светлакова Наталья</title>
   <meta name="description" content="Статьи по психологии, психосоматике и семейным сценариям. Автор — Светлакова Наталья.">
   <meta property="og:title" content="Мои статьи — Светлакова Наталья">
   <meta property="og:description" content="Статьи по психологии, психосоматике и семейным сценариям.">
@@ -25,7 +25,33 @@
       --radius: 16px;
       --shadow-sm: 0 2px 10px rgba(80, 60, 40, 0.06);
       --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);
+        /* Новые тени для объема и магии */
+      --shadow-sm: 0 4px 15px rgba(80, 60, 40, 0.04);
+      --shadow-md: 0 10px 30px rgba(80, 60, 40, 0.08);
+      --shadow-lg: 0 20px 50px rgba(183, 46, 74, 0.15);
+      --glow-primary: 0 0 30px rgba(183, 46, 74, 0.3);
+      --glow-gold: 0 0 30px rgba(201, 169, 97, 0.4);
     }
+
+    html[data-theme="dark"] {
+      --bg: #120f0d; /* Глубокий, почти черный, но с теплым оттенком */
+      --bg-card: rgba(33, 28, 25, 0.65); /* Темное стекло */
+      --text: #ece6e2;
+      --text-muted: #a09a95;
+      --border: rgba(50, 43, 39, 0.8);
+      --primary: #e6889a; /* Более нежный розовый для темной темы */
+      --primary-dark: #c96d80;
+      --primary-soft: rgba(230, 136, 154, 0.15);
+      --gold: #d4b274;
+      
+      --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
+      --glow-primary: 0 0 30px rgba(230, 136, 154, 0.25);
+      --glow-gold: 0 0 30px rgba(212, 178, 116, 0.3);
+    }
+
+    * { box-sizing: border-box; }
 
     * { box-sizing: border-box; }
 
@@ -49,24 +75,220 @@
     h1 {
       font-family: Georgia, 'Times New Roman', serif;
       color: var(--primary);
-      font-size: clamp(1.7rem, 4vw, 2.6rem);
-      margin: 0 0 12px;
+      font-size: (1.8rem, 4.5vw, 3rem);
+      margin: 0 0 16px;
       font-weight: 500;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.5px;  
+      
+        /* Градиентный текст с магическим свечением */
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0px 10px 25px rgba(183, 46, 74, 0.25));
+      transition: filter 0.5s ease;
     }
+
+    html[data-theme="dark"] h1 {
+      background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 30px rgba(230, 136, 154, 0.4));
+    }
+
     .subtitle {
-      color: var(--text-muted);
-      font-size: 1rem;
-      margin: 0 auto;
-      max-width: 560px;
+      display: inline-block;
+      padding: 10px 32px;
+      border-radius: 100px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary-dark);
+      
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(183, 46, 74, 0.15);
+      box-shadow: 
+        0 8px 32px rgba(183, 46, 74, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: all 0.4s ease;
+        }
+
+        html[data-theme="dark"] .subtitle {
+      color: #f4e3e7;
+      background: rgba(33, 28, 25, 0.6);
+      border: 1px solid rgba(230, 136, 154, 0.3);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(230, 136, 154, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
+
+    .subtitle:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(183, 46, 74, 0.15), 0 0 20px rgba(201, 169, 97, 0.3);
+    }
+
     .divider {
-      width: 60px;
+      width: 180px;
       height: 2px;
-      background: var(--primary);
+      background: linear-gradient(90deg, transparent, #b72e4a, transparent);
       margin: 24px auto 0;
       border-radius: 2px;
       opacity: 0.5;
+    }
+
+/* ==========================================================================
+   УСПОКАИВАЮЩИЙ ФОН 
+   Пастельные тона (лаванда, шалфей, персик) + мягкое «дыхание»
+   ========================================================================== */
+
+    .magic-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      /* Мягкий градиент из успокаивающих оттенков */
+      background: linear-gradient(180deg, #fcfaf7 0%, #f7f2ee 50%, #f2ece7 100%);
+    }
+
+    /* Акварельные пятна света — глубокий, но спокойный фон */
+    .magic-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 10%, rgba(216, 200, 224, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 85% 20%, rgba(200, 220, 208, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 70% at 50% 90%, rgba(240, 220, 200, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(230, 220, 235, 0.25) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Тонкая текстура «бумаги» — убирает плоскую заливку */
+    .magic-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Мягкие «дышащие» сферы — пастельные, без агрессии */
+    .magic-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.4;
+      animation: floatOrb 22s ease-in-out infinite;
+      transition: opacity 0.6s ease;
+    }
+
+    /* Сфера 1 — Лаванда (успокоение, медитация) */
+    .magic-orb--1 {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, #d4c4e0 0%, rgba(212, 196, 224, 0) 70%);
+      top: -180px;
+      left: -180px;
+      animation-delay: 0s;
+    }
+
+    /* Сфера 2 — Шалфей (равновесие, гармония) */
+    .magic-orb--2 {
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, #bcd4c4 0%, rgba(188, 212, 196, 0) 70%);
+      bottom: -120px;
+      right: -150px;
+      animation-delay: -7s;
+    }
+
+    /* Сфера 3 — Теплый персик (безопасность, забота) */
+    .magic-orb--3 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #efd6c4 0%, rgba(239, 214, 196, 0) 70%);
+      top: 45%;
+      left: 35%;
+      animation-delay: -14s;
+      opacity: 0.3;
+    }
+
+    /* «Дыхание» — плавное расширение, как при медитации */
+    @keyframes floatOrb {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.35;
+      }
+      50% {
+        transform: translate(20px, -25px) scale(1.12);
+        opacity: 0.5;
+      }
+    }
+
+    /* ==================== ТЕМНАЯ ТЕМА (Уютный «ночной» фон) ==================== */
+    html[data-theme="dark"] .magic-bg {
+      background: linear-gradient(180deg, #14100e 0%, #1a1512 50%, #1e1814 100%);
+    }
+
+    html[data-theme="dark"] .magic-bg::before {
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 10%, rgba(120, 100, 140, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 85% 20%, rgba(100, 130, 115, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 70% at 50% 90%, rgba(180, 140, 110, 0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(140, 120, 150, 0.14) 0%, transparent 60%);
+    }
+
+    html[data-theme="dark"] .magic-bg::after {
+      opacity: 0.45;
+      mix-blend-mode: screen;
+    }
+
+    /* В темной теме сферы — мягкое «ночное свечение» */
+    html[data-theme="dark"] .magic-orb--1 {
+      background: radial-gradient(circle, #7a6b8a 0%, rgba(122, 107, 138, 0) 70%);
+      opacity: 0.22;
+    }
+    html[data-theme="dark"] .magic-orb--2 {
+      background: radial-gradient(circle, #6b8578 0%, rgba(107, 133, 120, 0) 70%);
+      opacity: 0.2;
+    }
+    html[data-theme="dark"] .magic-orb--3 {
+      background: radial-gradient(circle, #a88b74 0%, rgba(168, 139, 116, 0) 70%);
+      opacity: 0.18;
+    }
+
+    html[data-theme="dark"] .magic-orb {
+      animation: floatOrbDark 25s ease-in-out infinite;
+    }
+
+    @keyframes floatOrbDark {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(25px, -30px) scale(1.1);
+      }
+    }
+
+    /* Уважение к пользователям с ограниченной анимацией */
+    @media (prefers-reduced-motion: reduce) {
+      .magic-orb {
+        animation: none !important;
+      }
+    }
+
+    /* Мобильная оптимизация */
+    @media (max-width: 600px) {
+      .magic-orb { filter: blur(70px); }
+      .magic-orb--1 { width: 350px; height: 350px; }
+      .magic-orb--2 { width: 320px; height: 320px; }
+      .magic-orb--3 { width: 280px; height: 280px; }
     }
 
     /* Навигация */
@@ -114,194 +336,343 @@
       gap: 28px;
     }
 
-    /* Карточка статьи — один-в-один как .cert-card */
-    .article-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      box-shadow: var(--shadow-sm);
-      transition:
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        border-color 0.3s ease;
-    }
-    .article-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(183, 46, 74, 0.25);
-    }
+/* ==========================================================================
+   КАРТОЧКИ СТАТЕЙ — СТИЛЬ "ФАРФОР" (без розовой кожи)
+   Поверхности почти белые. Глубина — за счёт теней. Розовый — только акцент.
+   ========================================================================== */
 
-    /* Превью — 4/3, как у сертификатов */
-    .article-thumb {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      background: var(--primary-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-    }
-    /* Внутренняя золотая рамка-паспарту */
-    .article-thumb::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(201, 169, 97, 0.35);
-      border-radius: 8px;
-      pointer-events: none;
-      transition: border-color 0.4s ease, inset 0.4s ease;
-      z-index: 2;
-    }
-    .article-card:hover .article-thumb::before {
-      border-color: rgba(201, 169, 97, 0.9);
-      inset: 6px;
-    }
+.article-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
 
-    .article-thumb img {
-      max-width: 100%;
-      max-height: 100%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      border-radius: 6px;
-      box-shadow: 0 6px 20px rgba(80, 60, 40, 0.12);
-      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.4s ease;
-      z-index: 1;
-    }
-    .article-card:hover .article-thumb img {
-      transform: scale(1.04);
-      box-shadow: 0 12px 30px rgba(80, 60, 40, 0.22);
-    }
+  /* Чистая фарфоровая поверхность — БЕЗ розового и жёлтого */
+  background: linear-gradient(
+    175deg,
+    #ffffff 0%,
+    #fdfdfd 55%,
+    #fafafb 100%
+  );
 
-    /* Плашка «СТАТЬЯ» — аналог .cert-type */
-    .article-type {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      z-index: 3;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: var(--primary);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      padding: 4px 9px;
-      border-radius: 100px;
-      border: 1px solid rgba(183, 46, 74, 0.15);
-      text-transform: uppercase;
-    }
+  /* Нейтральная серая кромка */
+  border: 1px solid rgba(110, 100, 105, 0.1);
+  border-radius: 20px;
 
-    /* Плашка с датой — аналог .cert-hours (золото-бордовая) */
-    .article-date-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 3;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 10px 5px 8px;
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px) saturate(1.4);
-      -webkit-backdrop-filter: blur(10px) saturate(1.4);
-      border: 1px solid rgba(201, 169, 97, 0.55);
-      box-shadow:
-        0 4px 14px rgba(140, 100, 40, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      color: #6b4a17;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.2px;
-      line-height: 1;
-      pointer-events: none;
-      transition:
-        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-    }
-    .article-date-badge__icon {
-      font-size: 0.9em;
-      line-height: 1;
-      color: #b8892b;
-      filter: drop-shadow(0 0 3px rgba(184, 137, 43, 0.35));
-    }
-    .article-card:hover .article-date-badge {
-      transform: translateY(-2px) scale(1.05);
-      border-color: rgba(201, 169, 97, 0.95);
-      box-shadow:
-        0 8px 22px rgba(140, 100, 40, 0.28),
-        0 0 22px rgba(201, 169, 97, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    }
+  /* Глубина — через нейтральные тени. Розовый — только в самой глубокой. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),               /* чистый верхний блик */
+    inset 0 -1px 0 rgba(110, 90, 100, 0.04),            /* нижняя внутренняя */
+    0 1px 2px rgba(60, 45, 55, 0.04),                   /* микро-тень */
+    0 4px 12px rgba(60, 45, 55, 0.05),                  /* мягкая */
+    0 14px 30px -10px rgba(60, 45, 55, 0.08),           /* глубокая нейтральная */
+    0 32px 60px -24px rgba(183, 46, 74, 0.1);           /* намёк на primary в глубине */
 
-    /* Информация под картинкой */
-    .article-info {
-      padding: 16px 18px 18px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .article-title {
-      font-family: Georgia, serif;
-      font-weight: 500;
-      font-size: 1.05rem;
-      margin: 0;
-      line-height: 1.35;
-      color: var(--text);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .article-meta {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+  cursor: pointer;
+}
 
-    /* Круглая стрелка «открыть» — как .cert-open */
-    .article-open {
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
-      z-index: 3;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      box-shadow: 0 6px 16px rgba(183, 46, 74, 0.4);
-    }
-    .article-card:hover .article-open {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* Световой блик на верхнем крае (белая «искра») */
+.article-card::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 1) 50%,
+    transparent
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Розовое свечение изнутри — ТОЛЬКО на hover, не в базе */
+.article-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: radial-gradient(
+    ellipse 70% 90% at 50% 100%,
+    rgba(183, 46, 74, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* ==================== HOVER ==================== */
+.article-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(183, 46, 74, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(110, 90, 100, 0.06),
+    0 2px 4px rgba(60, 45, 55, 0.04),
+    0 6px 16px rgba(60, 45, 55, 0.06),
+    0 22px 42px -12px rgba(183, 46, 74, 0.16),
+    0 42px 80px -24px rgba(183, 46, 74, 0.24),
+    0 0 0 1px rgba(183, 46, 74, 0.12);
+}
+
+.article-card:hover::after {
+  opacity: 1;
+}
+
+/* ==================== ЗОНА ПРЕВЬЮ ==================== */
+.article-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+
+  /* Нейтральный тёплый фон — БЕЗ розового */
+  background: linear-gradient(
+    180deg,
+    #fafafa 0%,
+    #f6f6f7 100%
+  );
+  border-bottom: 1px solid rgba(110, 100, 105, 0.07);
+}
+
+/* Паспарту-рамка — нейтральная в покое, розовая на hover */
+.article-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(110, 100, 105, 0.1);
+  border-radius: 10px;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.article-card:hover .article-thumb::before {
+  border-color: rgba(183, 46, 74, 0.45);
+  inset: 6px;
+  box-shadow: 0 0 20px rgba(183, 46, 74, 0.12);
+}
+
+.article-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(60, 45, 55, 0.1);
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease;
+  z-index: 1;
+}
+
+.article-card:hover .article-thumb img {
+  transform: scale(1.04);
+  box-shadow: 0 12px 28px rgba(60, 45, 55, 0.16);
+}
+
+/* ==================== ТЕКСТОВАЯ ЗОНА ==================== */
+.article-info {
+  position: relative;
+  z-index: 1;
+  padding: 20px 22px 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Никаких розовых заливок — просто прозрачно */
+  background: transparent;
+}
+
+.article-title {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover .article-title {
+  color: var(--primary-dark);
+}
+
+.article-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==================== ПЛАШКИ (тип и дата) ==================== */
+.article-type {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--primary-dark);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border: 1px solid rgba(110, 100, 105, 0.12);
+  text-transform: uppercase;
+  box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
+}
+
+.article-date-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(110, 100, 105, 0.12);
+  box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
+  color: var(--primary-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all 0.35s ease;
+}
+
+.article-card:hover .article-date-badge {
+  transform: translateY(-2px) scale(1.04);
+  border-color: rgba(183, 46, 74, 0.45);
+  box-shadow:
+    0 8px 18px rgba(183, 46, 74, 0.2),
+    0 0 0 3px rgba(183, 46, 74, 0.08);
+}
+
+/* ==================== КНОПКА "ОТКРЫТЬ" ==================== */
+.article-open {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  opacity: 0;
+  transform: translateY(10px) scale(0.85);
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow:
+    0 8px 20px rgba(183, 46, 74, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.article-card:hover .article-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ==========================================================================
+   ТЁМНАЯ ТЕМА — глубокий графит с бордовым свечением
+   ========================================================================== */
+html[data-theme="dark"] .article-card {
+  background: linear-gradient(175deg, #1e1a1c 0%, #1a1618 55%, #171315 100%);
+  border-color: rgba(110, 100, 105, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    0 14px 30px -10px rgba(0, 0, 0, 0.5),
+    0 32px 60px -24px rgba(230, 136, 154, 0.08);
+}
+
+html[data-theme="dark"] .article-card::after {
+  background: radial-gradient(
+    ellipse 70% 90% at 50% 100%,
+    rgba(230, 136, 154, 0.1) 0%,
+    transparent 70%
+  );
+}
+
+html[data-theme="dark"] .article-card:hover {
+  border-color: rgba(230, 136, 154, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 22px 42px -12px rgba(230, 136, 154, 0.18),
+    0 42px 80px -24px rgba(230, 136, 154, 0.22),
+    0 0 0 1px rgba(230, 136, 154, 0.2);
+}
+
+html[data-theme="dark"] .article-thumb {
+  background: linear-gradient(180deg, #211d1f 0%, #1a1618 100%);
+  border-bottom-color: rgba(110, 100, 105, 0.15);
+}
+
+html[data-theme="dark"] .article-thumb::before {
+  border-color: rgba(110, 100, 105, 0.2);
+}
+
+html[data-theme="dark"] .article-card:hover .article-thumb::before {
+  border-color: rgba(230, 136, 154, 0.5);
+  box-shadow: 0 0 20px rgba(230, 136, 154, 0.2);
+}
+
+html[data-theme="dark"] .article-type,
+html[data-theme="dark"] .article-date-badge {
+  background: rgba(30, 26, 28, 0.95);
+  color: #f0b5c1;
+  border-color: rgba(110, 100, 105, 0.25);
+}
+
+/* ==========================================================================
+   МОБИЛЬНАЯ ОПТИМИЗАЦИЯ
+   ========================================================================== */
+@media (max-width: 600px) {
+  .article-card {
+    border-radius: 16px;
+  }
+  .article-info {
+    padding: 16px 16px 20px;
+  }
+  .article-title {
+    font-size: 1rem;
+  }
+}
 
     .loading, .error {
       text-align: center;
@@ -534,6 +905,13 @@
   </style>
 </head>
 <body>
+    <!-- Волшебный фон -->
+  <div class="magic-bg">
+    <div class="magic-orb magic-orb--1"></div>
+    <div class="magic-orb magic-orb--2"></div>
+    <div class="magic-orb magic-orb--3"></div>
+  </div>
+
   <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
     <svg class="theme-svg theme-svg--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
@@ -546,7 +924,7 @@
 
   <div class="container">
     <header>
-      <h1>Мои статьи по психологии и психосоматике</h1>
+      <h1>Авторские публикации по психологии и психосоматике</h1>
       <p class="subtitle">Светлакова Наталья</p>
       <div class="divider"></div>
     </header>
