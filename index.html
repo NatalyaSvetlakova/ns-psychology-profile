@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Дипломы и сертификаты по психологии и психосоматике - Наталья Светлакова</title>
   <!-- Предзагрузка JSON с данными сертификатов -->
+  <link rel="preload" as="image" href="certificates/diplom_1.webp">
+  <link rel="preload" as="image" href="certificates/diplom_2.webp">
+  <link rel="preload" as="image" href="certificates/diplom_3.webp">
   <link rel="preload" href="certificates.json" as="fetch" crossorigin>
 
   <style>
@@ -1393,7 +1396,7 @@ html[data-theme="dark"] .modal__body img {
         // Для изображений всегда используем .webp
         const fileNameForUrl = file.name; 
 
-        const fileUrl = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${FOLDER}/${encodePath(fileNameForUrl)}`;
+        const fileUrl = `./certificates/${encodePath(fileNameForUrl)}`;
 
         const info  = data[base] || {};
         const title = info.title || humanize(base);
