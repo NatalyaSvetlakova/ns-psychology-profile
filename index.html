@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Дипломы и сертификаты по психологии и психосоматике - Наталья Светлакова</title>
+  <!-- Предзагрузка JSON с данными сертификатов -->
+  <link rel="preload" href="certificates.json" as="fetch" crossorigin>
+
   <style>
     :root {
       --bg: #fcfaf7;
@@ -17,34 +20,30 @@
       --border: #ece5dd;
       --radius: 16px;
       --shadow-sm: 0 2px 10px rgba(80, 60, 40, 0.06);
-      --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);
-        /* Новые тени для объема и магии */
+      --shadow-lg: 0 18px 42px rgba(183, 46, 74, 0.16);      
       --shadow-sm: 0 4px 15px rgba(80, 60, 40, 0.04);
       --shadow-md: 0 10px 30px rgba(80, 60, 40, 0.08);
       --shadow-lg: 0 20px 50px rgba(183, 46, 74, 0.15);
       --glow-primary: 0 0 30px rgba(183, 46, 74, 0.3);
-      --glow-gold: 0 0 30px rgba(201, 169, 97, 0.4);
+      --glow-gold: 0 0 30px rgba(201, 169, 97, 0.4);  
     }
 
     html[data-theme="dark"] {
-      --bg: #120f0d; /* Глубокий, почти черный, но с теплым оттенком */
-      --bg-card: rgba(33, 28, 25, 0.65); /* Темное стекло */
+      --bg: #120f0d;
+      --bg-card: rgba(33, 28, 25, 0.65);
       --text: #ece6e2;
       --text-muted: #a09a95;
       --border: rgba(50, 43, 39, 0.8);
-      --primary: #e6889a; /* Более нежный розовый для темной темы */
+      --primary: #e6889a;
       --primary-dark: #c96d80;
       --primary-soft: rgba(230, 136, 154, 0.15);
       --gold: #d4b274;
-      
       --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
       --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
       --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
       --glow-primary: 0 0 30px rgba(230, 136, 154, 0.25);
       --glow-gold: 0 0 30px rgba(212, 178, 116, 0.3);
     }
-
-    * { box-sizing: border-box; }
 
     * { box-sizing: border-box; }
 
@@ -71,9 +70,7 @@
       font-size: (1.8rem, 4.5vw, 3rem);
       margin: 0 0 16px;
       font-weight: 500;
-      letter-spacing: -0.5px;  
-      
-        /* Градиентный текст с магическим свечением */
+      letter-spacing: -0.5px; 
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-dark) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -132,22 +129,16 @@
       opacity: 0.5;
     }
 
-/* ==========================================================================
-   УСПОКАИВАЮЩИЙ ФОН ДЛЯ ПСИХОЛОГА
-   Пастельные тона (лаванда, шалфей, персик) + мягкое «дыхание»
-   ========================================================================== */
-
+    /* УСПОКАИВАЮЩИЙ ФОН */
     .magic-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       overflow: hidden;
       pointer-events: none;
-      /* Мягкий градиент из успокаивающих оттенков */
       background: linear-gradient(180deg, #fcfaf7 0%, #f7f2ee 50%, #f2ece7 100%);
     }
 
-    /* Акварельные пятна света — глубокий, но спокойный фон */
     .magic-bg::before {
       content: '';
       position: absolute;
@@ -160,7 +151,6 @@
       pointer-events: none;
     }
 
-    /* Тонкая текстура «бумаги» — убирает плоскую заливку */
     .magic-bg::after {
       content: '';
       position: absolute;
@@ -171,7 +161,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* Мягкие «дышащие» сферы — пастельные, без агрессии */
     .magic-orb {
       position: absolute;
       border-radius: 50%;
@@ -181,50 +170,33 @@
       transition: opacity 0.6s ease;
     }
 
-    /* Сфера 1 — Лаванда (успокоение, медитация) */
     .magic-orb--1 {
-      width: 550px;
-      height: 550px;
+      width: 550px; height: 550px;
       background: radial-gradient(circle, #d4c4e0 0%, rgba(212, 196, 224, 0) 70%);
-      top: -180px;
-      left: -180px;
+      top: -180px; left: -180px;
       animation-delay: 0s;
     }
 
-    /* Сфера 2 — Шалфей (равновесие, гармония) */
     .magic-orb--2 {
-      width: 480px;
-      height: 480px;
+      width: 480px; height: 480px;
       background: radial-gradient(circle, #bcd4c4 0%, rgba(188, 212, 196, 0) 70%);
-      bottom: -120px;
-      right: -150px;
+      bottom: -120px; right: -150px;
       animation-delay: -7s;
     }
 
-    /* Сфера 3 — Теплый персик (безопасность, забота) */
     .magic-orb--3 {
-      width: 420px;
-      height: 420px;
+      width: 420px; height: 420px;
       background: radial-gradient(circle, #efd6c4 0%, rgba(239, 214, 196, 0) 70%);
-      top: 45%;
-      left: 35%;
+      top: 45%; left: 35%;
       animation-delay: -14s;
       opacity: 0.3;
     }
 
-    /* «Дыхание» — плавное расширение, как при медитации */
     @keyframes floatOrb {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.35;
-      }
-      50% {
-        transform: translate(20px, -25px) scale(1.12);
-        opacity: 0.5;
-      }
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+      50% { transform: translate(20px, -25px) scale(1.12); opacity: 0.5; }
     }
 
-    /* ==================== ТЕМНАЯ ТЕМА (Уютный «ночной» фон) ==================== */
     html[data-theme="dark"] .magic-bg {
       background: linear-gradient(180deg, #14100e 0%, #1a1512 50%, #1e1814 100%);
     }
@@ -242,7 +214,6 @@
       mix-blend-mode: screen;
     }
 
-    /* В темной теме сферы — мягкое «ночное свечение» */
     html[data-theme="dark"] .magic-orb--1 {
       background: radial-gradient(circle, #7a6b8a 0%, rgba(122, 107, 138, 0) 70%);
       opacity: 0.22;
@@ -261,22 +232,14 @@
     }
 
     @keyframes floatOrbDark {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        transform: translate(25px, -30px) scale(1.1);
-      }
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(25px, -30px) scale(1.1); }
     }
 
-    /* Уважение к пользователям с ограниченной анимацией */
     @media (prefers-reduced-motion: reduce) {
-      .magic-orb {
-        animation: none !important;
-      }
+      .magic-orb { animation: none !important; }
     }
 
-    /* Мобильная оптимизация */
     @media (max-width: 600px) {
       .magic-orb { filter: blur(70px); }
       .magic-orb--1 { width: 350px; height: 350px; }
@@ -290,382 +253,340 @@
       gap: 28px;
     }
 
-/* ==========================================================================
-   КАРТОЧКИ — СТИЛЬ "ФАРФОР" (исправленный, без розовой кожи)
-   Поверхности почти белые. Глубина — за счёт теней. Розовый — только акцент.
-   ========================================================================== */
+    /* ==========================================================================
+       КАРТОЧКИ — СТИЛЬ "ФАРФОР"
+       ========================================================================== */
+    .cert-card,
+    .article-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      background: linear-gradient(175deg, #ffffff 0%, #fdfdfd 55%, #fafafb 100%);
+      border: 1px solid rgba(110, 100, 105, 0.1);
+      border-radius: 20px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 0 rgba(110, 90, 100, 0.04),
+        0 1px 2px rgba(60, 45, 55, 0.04),
+        0 4px 12px rgba(60, 45, 55, 0.05),
+        0 14px 30px -10px rgba(60, 45, 55, 0.08),
+        0 32px 60px -24px rgba(183, 46, 74, 0.1);
+      transition:
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.4s ease;
+      cursor: pointer;
+    }
 
-.cert-card,
-.article-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
+    .cert-card::before,
+    .article-card::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 18%;
+      right: 18%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 1) 50%, transparent);
+      z-index: 5;
+      pointer-events: none;
+    }
 
-  /* Чистая фарфоровая поверхность — БЕЗ розового и жёлтого */
-  background: linear-gradient(
-    175deg,
-    #ffffff 0%,
-    #fdfdfd 55%,
-    #fafafb 100%
-  );
+    .cert-card::after,
+    .article-card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 50%;
+      background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(183, 46, 74, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-  /* Нейтральная серая кромка с лёгким тёплым подтоном */
-  border: 1px solid rgba(110, 100, 105, 0.1);
-  border-radius: 20px;
+    .cert-card:hover,
+    .article-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(183, 46, 74, 0.25);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 0 rgba(110, 90, 100, 0.06),
+        0 2px 4px rgba(60, 45, 55, 0.04),
+        0 6px 16px rgba(60, 45, 55, 0.06),
+        0 22px 42px -12px rgba(183, 46, 74, 0.16),
+        0 42px 80px -24px rgba(183, 46, 74, 0.24),
+        0 0 0 1px rgba(183, 46, 74, 0.12);
+    }
 
-  /* Глубина — через нейтральные тени. Розовый — только в самой глубокой. */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),               /* чистый верхний блик */
-    inset 0 -1px 0 rgba(110, 90, 100, 0.04),            /* нижняя внутренняя */
-    0 1px 2px rgba(60, 45, 55, 0.04),                   /* микро-тень */
-    0 4px 12px rgba(60, 45, 55, 0.05),                  /* мягкая */
-    0 14px 30px -10px rgba(60, 45, 55, 0.08),           /* глубокая нейтральная */
-    0 32px 60px -24px rgba(183, 46, 74, 0.1);           /* намёк на primary в глубине */
+    .cert-card:hover::after,
+    .article-card:hover::after {
+      opacity: 1;
+    }
 
-  transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
-  cursor: pointer;
-}
+    .cert-thumb,
+    .article-thumb {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #fafafa 0%, #f6f6f7 100%);
+      border-bottom: 1px solid rgba(110, 100, 105, 0.07);
+    }
 
-/* Световой блик на верхнем крае (белая «искра») */
-.cert-card::before,
-.article-card::before {
-  content: '';
-  position: absolute;
-  top: 1px;
-  left: 18%;
-  right: 18%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 1) 50%,
-    transparent
-  );
-  z-index: 5;
-  pointer-events: none;
-}
+    .cert-thumb { aspect-ratio: 3 / 4; }
+    .article-thumb { aspect-ratio: 4 / 3; padding: 16px; }
 
-/* Розовое свечение изнутри — ТОЛЬКО на hover, не в базе */
-.cert-card::after,
-.article-card::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 50%;
-  background: radial-gradient(
-    ellipse 70% 90% at 50% 100%,
-    rgba(183, 46, 74, 0.06) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
+    .cert-thumb::before,
+    .article-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(110, 100, 105, 0.1);
+      border-radius: 10px;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 2;
+    }
 
-/* ==================== HOVER ==================== */
-.cert-card:hover,
-.article-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(183, 46, 74, 0.25);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(110, 90, 100, 0.06),
-    0 2px 4px rgba(60, 45, 55, 0.04),
-    0 6px 16px rgba(60, 45, 55, 0.06),
-    0 22px 42px -12px rgba(183, 46, 74, 0.16),
-    0 42px 80px -24px rgba(183, 46, 74, 0.24),
-    0 0 0 1px rgba(183, 46, 74, 0.12);
-}
+    .cert-card:hover .cert-thumb::before,
+    .article-card:hover .article-thumb::before {
+      border-color: rgba(183, 46, 74, 0.45);
+      inset: 6px;
+      box-shadow: 0 0 20px rgba(183, 46, 74, 0.12);
+    }
 
-.cert-card:hover::after,
-.article-card:hover::after {
-  opacity: 1;
-}
+    .cert-thumb img,
+    .cert-thumb iframe,
+    .article-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(60, 45, 55, 0.1);
+      transition:
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.5s ease;
+      z-index: 1;
+    }
 
-/* ==================== ЗОНА ПРЕВЬЮ ==================== */
-.cert-thumb,
-.article-thumb {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px;
-  overflow: hidden;
+    .article-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-  /* Нейтральный тёплый фон — БЕЗ розового */
-  background: linear-gradient(
-    180deg,
-    #fafafa 0%,
-    #f6f6f7 100%
-  );
-  border-bottom: 1px solid rgba(110, 100, 105, 0.07);
-}
+    .cert-card:hover .cert-thumb img,
+    .cert-card:hover .cert-thumb iframe,
+    .article-card:hover .article-thumb img {
+      transform: scale(1.04);
+      box-shadow: 0 12px 28px rgba(60, 45, 55, 0.16);
+    }
 
-.cert-thumb { aspect-ratio: 3 / 4; }
-.article-thumb { aspect-ratio: 4 / 3; padding: 16px; }
+    .cert-info,
+    .article-info {
+      position: relative;
+      z-index: 1;
+      padding: 16px 18px 18px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: transparent;
+    }
 
-/* Паспарту-рамка — нейтральная в покое, розовая на hover */
-.cert-thumb::before,
-.article-thumb::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(110, 100, 105, 0.1);
-  border-radius: 10px;
-  pointer-events: none;
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 2;
-}
+    .article-info { padding: 20px 22px 24px; gap: 8px; }
 
-.cert-card:hover .cert-thumb::before,
-.article-card:hover .article-thumb::before {
-  border-color: rgba(183, 46, 74, 0.45);
-  inset: 6px;
-  box-shadow: 0 0 20px rgba(183, 46, 74, 0.12);
-}
+    .cert-title,
+    .article-title {
+      font-family: Georgia, serif;
+      font-weight: 600;
+      font-size: 1.02rem;
+      margin: 0;
+      line-height: 1.35;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color 0.3s ease;
+    }
 
-.cert-thumb img,
-.cert-thumb iframe,
-.article-thumb img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(60, 45, 55, 0.1);
-  transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.5s ease;
-  z-index: 1;
-}
+    .article-title { font-size: 1.1rem; line-height: 1.4; }
 
-.article-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .cert-card:hover .cert-title,
+    .article-card:hover .article-title {
+      color: var(--primary-dark);
+    }
 
-.cert-card:hover .cert-thumb img,
-.cert-card:hover .cert-thumb iframe,
-.article-card:hover .article-thumb img {
-  transform: scale(1.04);
-  box-shadow: 0 12px 28px rgba(60, 45, 55, 0.16);
-}
+    .cert-meta,
+    .article-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-/* ==================== ТЕКСТОВАЯ ЗОНА ==================== */
-.cert-info,
-.article-info {
-  position: relative;
-  z-index: 1;
-  padding: 16px 18px 18px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  /* Никаких розовых заливок — просто прозрачно */
-  background: transparent;
-}
+    .article-meta { font-size: 0.85rem; line-height: 1.5; }
 
-.article-info { padding: 20px 22px 24px; gap: 8px; }
+    .cert-type,
+    .article-type {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--primary-dark);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: 5px 11px;
+      border-radius: 100px;
+      border: 1px solid rgba(110, 100, 105, 0.12);
+      text-transform: uppercase;
+      box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
+    }
 
-.cert-title,
-.article-title {
-  font-family: Georgia, serif;
-  font-weight: 600;
-  font-size: 1.02rem;
-  margin: 0;
-  line-height: 1.35;
-  color: var(--text);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: color 0.3s ease;
-}
+    .article-type { top: 16px; left: 16px; }
 
-.article-title { font-size: 1.1rem; line-height: 1.4; }
+    .cert-date-badge,
+    .article-date-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 3;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(110, 100, 105, 0.12);
+      box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: all 0.35s ease;
+    }
 
-.cert-card:hover .cert-title,
-.article-card:hover .article-title {
-  color: var(--primary-dark);
-}
+    .article-date-badge { top: 16px; right: 16px; }
 
-.cert-meta,
-.article-meta {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+    .cert-card:hover .cert-date-badge,
+    .article-card:hover .article-date-badge {
+      transform: translateY(-2px) scale(1.04);
+      border-color: rgba(183, 46, 74, 0.45);
+      box-shadow:
+        0 8px 18px rgba(183, 46, 74, 0.2),
+        0 0 0 3px rgba(183, 46, 74, 0.08);
+    }
 
-.article-meta { font-size: 0.85rem; line-height: 1.5; }
+    .cert-open,
+    .article-open {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.85);
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow:
+        0 8px 20px rgba(183, 46, 74, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
 
-/* ==================== ПЛАШКИ (тип и дата) ==================== */
-.cert-type,
-.article-type {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 3;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--primary-dark);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  padding: 5px 11px;
-  border-radius: 100px;
-  border: 1px solid rgba(110, 100, 105, 0.12);
-  text-transform: uppercase;
-  box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
-}
+    .article-open { right: 18px; bottom: 18px; width: 40px; height: 40px; font-size: 17px; }
 
-.article-type { top: 16px; left: 16px; }
+    .cert-card:hover .cert-open,
+    .article-card:hover .article-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
 
-.cert-date-badge,
-.article-date-badge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 3;
-  padding: 5px 12px;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(110, 100, 105, 0.12);
-  box-shadow: 0 3px 10px rgba(60, 45, 55, 0.08);
-  color: var(--primary-dark);
-  font-size: 0.78rem;
-  font-weight: 700;
-  transition: all 0.35s ease;
-}
+    /* ==========================================================================
+       ТЁМНАЯ ТЕМА
+       ========================================================================== */
+    html[data-theme="dark"] .cert-card,
+    html[data-theme="dark"] .article-card {
+      background: linear-gradient(175deg, #1e1a1c 0%, #1a1618 55%, #171315 100%);
+      border-color: rgba(110, 100, 105, 0.18);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+        0 1px 2px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.35),
+        0 14px 30px -10px rgba(0, 0, 0, 0.5),
+        0 32px 60px -24px rgba(230, 136, 154, 0.08);
+    }
 
-.article-date-badge { top: 16px; right: 16px; }
+    html[data-theme="dark"] .cert-card:hover,
+    html[data-theme="dark"] .article-card:hover {
+      border-color: rgba(230, 136, 154, 0.4);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 22px 42px -12px rgba(230, 136, 154, 0.18),
+        0 42px 80px -24px rgba(230, 136, 154, 0.22),
+        0 0 0 1px rgba(230, 136, 154, 0.2);
+    }
 
-.cert-card:hover .cert-date-badge,
-.article-card:hover .article-date-badge {
-  transform: translateY(-2px) scale(1.04);
-  border-color: rgba(183, 46, 74, 0.45);
-  box-shadow:
-    0 8px 18px rgba(183, 46, 74, 0.2),
-    0 0 0 3px rgba(183, 46, 74, 0.08);
-}
+    html[data-theme="dark"] .cert-thumb,
+    html[data-theme="dark"] .article-thumb {
+      background: linear-gradient(180deg, #211d1f 0%, #1a1618 100%);
+      border-bottom-color: rgba(110, 100, 105, 0.15);
+    }
 
-/* ==================== КНОПКА "ОТКРЫТЬ" ==================== */
-.cert-open,
-.article-open {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  z-index: 3;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  opacity: 0;
-  transform: translateY(10px) scale(0.85);
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow:
-    0 8px 20px rgba(183, 46, 74, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
+    html[data-theme="dark"] .cert-thumb::before,
+    html[data-theme="dark"] .article-thumb::before {
+      border-color: rgba(110, 100, 105, 0.2);
+    }
 
-.article-open { right: 18px; bottom: 18px; width: 40px; height: 40px; font-size: 17px; }
+    html[data-theme="dark"] .cert-card:hover .cert-thumb::before,
+    html[data-theme="dark"] .article-card:hover .article-thumb::before {
+      border-color: rgba(230, 136, 154, 0.5);
+    }
 
-.cert-card:hover .cert-open,
-.article-card:hover .article-open {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+    html[data-theme="dark"] .cert-type,
+    html[data-theme="dark"] .article-type,
+    html[data-theme="dark"] .cert-date-badge,
+    html[data-theme="dark"] .article-date-badge {
+      background: rgba(30, 26, 28, 0.95);
+      color: #f0b5c1;
+      border-color: rgba(110, 100, 105, 0.25);
+    }
 
-/* ==========================================================================
-   ТЁМНАЯ ТЕМА — глубокий графит с бордовым свечением
-   ========================================================================== */
-html[data-theme="dark"] .cert-card,
-html[data-theme="dark"] .article-card {
-  background: linear-gradient(175deg, #1e1a1c 0%, #1a1618 55%, #171315 100%);
-  border-color: rgba(110, 100, 105, 0.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 1px 2px rgba(0, 0, 0, 0.4),
-    0 4px 12px rgba(0, 0, 0, 0.35),
-    0 14px 30px -10px rgba(0, 0, 0, 0.5),
-    0 32px 60px -24px rgba(230, 136, 154, 0.08);
-}
+    @media (max-width: 600px) {
+      .cert-card,
+      .article-card {
+        border-radius: 16px;
+      }
+      .cert-info,
+      .article-info {
+        padding: 14px 14px 16px;
+      }
+      .cert-title { font-size: 0.95rem; }
+      .article-title { font-size: 1rem; }
+    }
 
-html[data-theme="dark"] .cert-card:hover,
-html[data-theme="dark"] .article-card:hover {
-  border-color: rgba(230, 136, 154, 0.4);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 2px 4px rgba(0, 0, 0, 0.4),
-    0 22px 42px -12px rgba(230, 136, 154, 0.18),
-    0 42px 80px -24px rgba(230, 136, 154, 0.22),
-    0 0 0 1px rgba(230, 136, 154, 0.2);
-}
-
-html[data-theme="dark"] .cert-thumb,
-html[data-theme="dark"] .article-thumb {
-  background: linear-gradient(180deg, #211d1f 0%, #1a1618 100%);
-  border-bottom-color: rgba(110, 100, 105, 0.15);
-}
-
-html[data-theme="dark"] .cert-thumb::before,
-html[data-theme="dark"] .article-thumb::before {
-  border-color: rgba(110, 100, 105, 0.2);
-}
-
-html[data-theme="dark"] .cert-card:hover .cert-thumb::before,
-html[data-theme="dark"] .article-card:hover .article-thumb::before {
-  border-color: rgba(230, 136, 154, 0.5);
-}
-
-html[data-theme="dark"] .cert-type,
-html[data-theme="dark"] .article-type,
-html[data-theme="dark"] .cert-date-badge,
-html[data-theme="dark"] .article-date-badge {
-  background: rgba(30, 26, 28, 0.95);
-  color: #f0b5c1;
-  border-color: rgba(110, 100, 105, 0.25);
-}
-
-/* ==========================================================================
-   МОБИЛЬНАЯ ОПТИМИЗАЦИЯ
-   ========================================================================== */
-@media (max-width: 600px) {
-  .cert-card,
-  .article-card {
-    border-radius: 16px;
-  }
-  .cert-info,
-  .article-info {
-    padding: 14px 14px 16px;
-  }
-  .cert-title { font-size: 0.95rem; }
-  .article-title { font-size: 1rem; }
-}
     .loading,
     .error {
       text-align: center;
@@ -692,84 +613,76 @@ html[data-theme="dark"] .article-date-badge {
     .error { color: var(--primary); }
 
     /* ===== Метка «часов обучения» ===== */
-.cert-hours {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 3;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-
-  padding: 5px 10px 5px 8px;
-  border-radius: 100px;
-
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px) saturate(1.4);
-  -webkit-backdrop-filter: blur(10px) saturate(1.4);
-
-  border: 1px solid rgba(201, 169, 97, 0.55);
-  box-shadow:
-    0 4px 14px rgba(140, 100, 40, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-
-  color: #6b4a17;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.2px;
-  line-height: 1;
-
-  pointer-events: none;
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
-}
-
-.cert-hours__icon {
-  font-size: 0.9em;
-  line-height: 1;
-  color: #b8892b;
-  filter: drop-shadow(0 0 3px rgba(184, 137, 43, 0.35));
-}
-
-.cert-hours__value {
-  letter-spacing: 0.3px;
-}
-
-.cert-card:hover .cert-hours {
-  transform: translateY(-2px) scale(1.05);
-  border-color: rgba(201, 169, 97, 0.95);
-  box-shadow:
-    0 8px 22px rgba(140, 100, 40, 0.28),
-    0 0 22px rgba(201, 169, 97, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
-}
-
-
- 
     .cert-hours {
-        background: rgba(33, 28, 25, 0.85);
-        color: #e8c98a;
-        border-color: rgba(212, 178, 116, 0.45);
-        box-shadow:
-            0 4px 14px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-        .cert-hours__icon {
-        color: #e8c98a;
-        filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
-        }
-        .cert-card:hover .cert-hours {
-        border-color: rgba(232, 201, 138, 0.9);
-        box-shadow:
-            0 8px 22px rgba(0, 0, 0, 0.55),
-            0 0 24px rgba(232, 201, 138, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px 5px 8px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px) saturate(1.4);
+      -webkit-backdrop-filter: blur(10px) saturate(1.4);
+      border: 1px solid rgba(201, 169, 97, 0.55);
+      box-shadow:
+        0 4px 14px rgba(140, 100, 40, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #6b4a17;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.2px;
+      line-height: 1;
+      pointer-events: none;
+      transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+    }
+
+    .cert-hours__icon {
+      font-size: 0.9em;
+      line-height: 1;
+      color: #b8892b;
+      filter: drop-shadow(0 0 3px rgba(184, 137, 43, 0.35));
+    }
+
+    .cert-hours__value {
+      letter-spacing: 0.3px;
+    }
+
+    .cert-card:hover .cert-hours {
+      transform: translateY(-2px) scale(1.05);
+      border-color: rgba(201, 169, 97, 0.95);
+      box-shadow:
+        0 8px 22px rgba(140, 100, 40, 0.28),
+        0 0 22px rgba(201, 169, 97, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    html[data-theme="dark"] .cert-hours {
+      background: rgba(33, 28, 25, 0.85);
+      color: #e8c98a;
+      border-color: rgba(212, 178, 116, 0.45);
+      box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    html[data-theme="dark"] .cert-hours__icon {
+      color: #e8c98a;
+      filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
+    }
+    html[data-theme="dark"] .cert-card:hover .cert-hours {
+      border-color: rgba(232, 201, 138, 0.9);
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(232, 201, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
 
     @media (max-width: 600px) {
       body { padding: 28px 16px 60px; }
@@ -781,6 +694,7 @@ html[data-theme="dark"] .article-date-badge {
       .cert-info { padding: 14px 14px 16px; }
       .cert-title { font-size: 0.95rem; }
     }
+
     /* Кнопка переключения темы */
     .theme-toggle {
       position: fixed;
@@ -792,7 +706,7 @@ html[data-theme="dark"] .article-date-badge {
       border-radius: 50%;
       border: 1px solid var(--border);
       background: var(--bg-card);
-      color: var(--primary);      
+      color: var(--primary);
       cursor: pointer;
       box-shadow: var(--shadow-sm);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -805,7 +719,6 @@ html[data-theme="dark"] .article-date-badge {
       box-shadow: var(--shadow-lg);
     }
 
-    /* Ручная тёмная тема (когда пользователь нажал кнопку) */
     html[data-theme="dark"] {
       --bg: #171412;
       --bg-card: #211c19;
@@ -830,27 +743,9 @@ html[data-theme="dark"] .article-date-badge {
       color: var(--primary);
       border-color: rgba(230, 136, 154, 0.25);
     }
-    html[data-theme="dark"] .cert-hours {
-      background: rgba(33, 28, 25, 0.85);
-      color: #e8c98a;
-      border-color: rgba(212, 178, 116, 0.45);
-      box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-    html[data-theme="dark"] .cert-hours__icon {
-      color: #e8c98a;
-      filter: drop-shadow(0 0 4px rgba(232, 201, 138, 0.5));
-    }
-    html[data-theme="dark"] .cert-card:hover .cert-hours {
-      border-color: rgba(232, 201, 138, 0.9);
-      box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.55),
-        0 0 24px rgba(232, 201, 138, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
+
     /* Навигация */
-  .nav {
+    .nav {
       display: flex;
       justify-content: center;
       gap: 8px;
@@ -886,7 +781,6 @@ html[data-theme="dark"] .article-date-badge {
       transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
-    /* Иконки навигации */
     .nav .nav-svg {
       width: 17px;
       height: 17px;
@@ -906,33 +800,11 @@ html[data-theme="dark"] .article-date-badge {
     .theme-toggle:hover .theme-svg {
       transform: rotate(-15deg) scale(1.08);
     }
-    /* Иконки навигации */
-    .nav .nav-svg {
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .nav a:hover .nav-svg {
-      transform: translateY(-1px) scale(1.08);
-    }
-
-    /* Иконка в кнопке темы */
-    .theme-toggle .theme-svg {
-      width: 20px;
-      height: 20px;
-      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
-    }
-    .theme-toggle:hover .theme-svg {
-      transform: rotate(-15deg) scale(1.08);
-    }
-    /* По умолчанию (светлая тема) — видна луна */
     .theme-toggle .theme-svg--sun { display: none; }
     .theme-toggle .theme-svg--moon { display: block; }
-
-    /* Тёмная тема — видно солнце */
     html[data-theme="dark"] .theme-toggle .theme-svg--sun { display: block; }
     html[data-theme="dark"] .theme-toggle .theme-svg--moon { display: none; }
+
     /* ===== Кнопка «Наверх» ===== */
     .scroll-top {
       position: fixed;
@@ -967,15 +839,11 @@ html[data-theme="dark"] .article-date-badge {
       height: 20px;
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
-    /* Появление */
     .scroll-top.is-visible {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-
-    /* Ховер — лёгкий подъём стрелки и цветной фон */
     .scroll-top:hover {
       background: var(--primary);
       color: #fff;
@@ -986,13 +854,9 @@ html[data-theme="dark"] .article-date-badge {
     .scroll-top:hover svg {
       transform: translateY(-2px);
     }
-
-    /* Нажатие */
     .scroll-top:active {
       transform: translateY(-1px) scale(0.96);
     }
-
-    /* На мобильных — ближе к краю */
     @media (max-width: 600px) {
       .scroll-top {
         bottom: 20px;
@@ -1002,6 +866,7 @@ html[data-theme="dark"] .article-date-badge {
       }
       .scroll-top svg { width: 18px; height: 18px; }
     }
+
     /* ===== Футер ===== */
     .site-footer {
       margin-top: 80px;
@@ -1048,14 +913,13 @@ html[data-theme="dark"] .article-date-badge {
       line-height: 1.55;
       opacity: 0.85;
     }
-
-    /* Адаптив */
     @media (max-width: 600px) {
       .site-footer { margin-top: 56px; padding: 32px 16px 20px; }
       .footer-copy { font-size: 0.85rem; }
       .footer-note { font-size: 0.72rem; }
     }
-    /* ===== Модальное окно сертификата — в стиле психологического проекта ===== */
+
+    /* ===== Модальное окно ===== */
     .modal {
       position: fixed;
       inset: 0;
@@ -1067,19 +931,29 @@ html[data-theme="dark"] .article-date-badge {
     }
     .modal.is-open { display: flex; }
 
-    /* Тёплая подложка в тон бумажной палитре проекта */
+    /* --- ФОН МОДАЛЬНОГО ОКНА --- */
     .modal__backdrop {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(183, 46, 74, 0.22) 0%, transparent 55%),
-        radial-gradient(circle at 80% 100%, rgba(201, 169, 97, 0.18) 0%, transparent 55%),
-        rgba(24, 16, 14, 0.88);
-      backdrop-filter: blur(14px) saturate(1.1);
-      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      /* Используем переменную --bg для светлой темы и легкую прозрачность */
+      background: 
+        radial-gradient(circle at 20% 0%, rgba(183, 46, 74, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 80% 100%, rgba(201, 169, 97, 0.08) 0%, transparent 55%),
+        color-mix(in srgb, var(--bg) 88%, transparent); 
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
       opacity: 0;
       transition: opacity 0.4s ease;
     }
+
+    /* В темной теме возвращаем темный фон */
+    html[data-theme="dark"] .modal__backdrop {
+      background:
+        radial-gradient(circle at 20% 0%, rgba(230, 136, 154, 0.15) 0%, transparent 55%),
+        radial-gradient(circle at 80% 100%, rgba(212, 178, 116, 0.12) 0%, transparent 55%),
+        rgba(18, 15, 13, 0.88);
+    }
+
     .modal.is-open .modal__backdrop { opacity: 1; }
 
     .modal__content {
@@ -1097,7 +971,6 @@ html[data-theme="dark"] .article-date-badge {
     }
     .modal.is-open .modal__content { opacity: 1; transform: scale(1); }
 
-    /* Верхняя панель */
     .modal__header {
       position: absolute;
       top: 0;
@@ -1111,92 +984,85 @@ html[data-theme="dark"] .article-date-badge {
       pointer-events: none;
     }
 
-    /* Кнопка "Назад" — тёплое стекло с золотым ободком */
-    .modal__back {
+    /* --- КНОПКИ В МОДАЛЬНОМ ОКНЕ (Стиль "Стекло" на светлом фоне) --- */
+    .modal__back,
+    .modal__theme {
       pointer-events: auto;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      /* Легкая белая заливка, чтобы кнопка не сливалась с фоном */
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      border: 1px solid rgba(183, 46, 74, 0.2); /* Тонкая розовая рамка в стиле сайта */
+      color: var(--primary-dark); /* Темно-розовый текст */
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 
+        0 4px 15px rgba(80, 60, 40, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
 
+    .modal__back {
       padding: 11px 22px;
       border-radius: 100px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(252, 250, 247, 0.1);
-      backdrop-filter: blur(14px) saturate(1.3);
-      -webkit-backdrop-filter: blur(14px) saturate(1.3);
-      color: #fdfaf5;
-
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: 0.2px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    }
-    .modal__back:hover {
-      background: #fcfaf7;
-      color: var(--primary);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(201, 169, 97, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
 
-    /* Обёртка правых кнопок */
-    .modal__actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      pointer-events: auto;
-    }
-
-    /* Переключатель темы и крестик */
     .modal__theme {
-      pointer-events: auto;
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(252, 250, 247, 0.1);
-      backdrop-filter: blur(14px) saturate(1.3);
-      -webkit-backdrop-filter: blur(14px) saturate(1.3);
-      color: #fdfaf5;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
       padding: 0;
-      font-size: 24px;
-      line-height: 1;
-      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    }
-    .modal__theme:hover {
-      background: #fcfaf7;
-      color: var(--primary);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(201, 169, 97, 0.4);
     }
 
-    /* Иконки в переключателе темы */
+    .modal__back:hover,
+    .modal__theme:hover {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 25px rgba(183, 46, 74, 0.15),
+        0 0 0 1px rgba(183, 46, 74, 0.2);
+    }
+
+    /* Иконки кнопок */
+    .modal__back svg,
     .modal__theme .theme-svg {
       width: 20px;
       height: 20px;
       transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .modal__theme:hover .theme-svg { transform: rotate(-15deg) scale(1.08); }
+
     .modal__theme .theme-svg--sun { display: none; }
     .modal__theme .theme-svg--moon { display: block; }
     html[data-theme="dark"] .modal__theme .theme-svg--sun { display: block; }
     html[data-theme="dark"] .modal__theme .theme-svg--moon { display: none; }
 
-    /* Тело с контентом */
+    /* Возвращаем стиль кнопок для ТЕМНОЙ темы */
+    html[data-theme="dark"] .modal__back,
+    html[data-theme="dark"] .modal__theme {
+      background: rgba(252, 250, 247, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #fdfaf5;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    html[data-theme="dark"] .modal__back:hover,
+    html[data-theme="dark"] .modal__theme:hover {
+      background: #fcfaf7;
+      color: var(--primary);
+      border-color: var(--gold);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(201, 169, 97, 0.4);
+    }
+
+    /* --- ЗОНА ПРОСМОТРА --- */
     .modal__body {
       width: 100%;
       height: 100%;
@@ -1207,28 +1073,29 @@ html[data-theme="dark"] .article-date-badge {
       overflow: auto;
     }
 
-    /* Картинка сертификата — «паспарту» в тёплой бумаге проекта */
+    /* --- САМА КАРТИНКА СЕРТИФИКАТА --- */
     .modal__body img {
       max-width: 100%;
       max-height: calc(100vh - 160px);
       width: auto;
       height: auto;
       display: block;
-      padding: 10px;
-      background: var(--paper);
-      border: 1px solid rgba(201, 169, 97, 0.5);
+      padding: 12px;
+      background: #ffffff; /* Всегда белый фон под документом, чтобы он выглядел как бумага */
+      border: 1px solid rgba(201, 169, 97, 0.6); /* Золотистая рамка */
       border-radius: var(--radius);
       box-shadow:
-        0 30px 90px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+        0 20px 60px rgba(80, 60, 40, 0.15), /* Мягкая, но глубокая тень */
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset; /* Внутренний блик */
       animation: fadeInImg 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html[data-theme="dark"] .modal__body img {
-      border-color: rgba(212, 178, 116, 0.45);
-    }
+html[data-theme="dark"] .modal__body img {
+  background: #1a1618; /* Или var(--bg-card) */
+  border-color: rgba(212, 178, 116, 0.45); 
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+}
 
-    /* PDF-фрейм */
     .modal__body iframe {
       width: 100%;
       max-width: 1000px;
@@ -1247,7 +1114,6 @@ html[data-theme="dark"] .article-date-badge {
 
     body.modal-open { overflow: hidden; }
 
-    /* Заглушка PDF-превью в карточке */
     .cert-thumb-pdf {
       width: 100%;
       height: 100%;
@@ -1266,11 +1132,10 @@ html[data-theme="dark"] .article-date-badge {
       color: var(--primary);
     }
 
-    /* Адаптив */
     @media (max-width: 600px) {
       .modal__header { padding: 14px 16px; }
       .modal__back { padding: 9px 16px; font-size: 0.83rem; }
-      .modal__back svg { width: 16px; height: 16px; }      
+      .modal__back svg { width: 16px; height: 16px; }
       .modal__theme .theme-svg { width: 18px; height: 18px; }
       .modal__body { padding: 70px 12px 24px; }
       .modal__body img {
@@ -1283,7 +1148,7 @@ html[data-theme="dark"] .article-date-badge {
   </style>
 </head>
 <body>
-    <!-- Волшебный фон -->
+  <!-- Волшебный фон -->
   <div class="magic-bg">
     <div class="magic-orb magic-orb--1"></div>
     <div class="magic-orb magic-orb--2"></div>
@@ -1305,48 +1170,52 @@ html[data-theme="dark"] .article-date-badge {
       <p class="subtitle">Светлакова Наталья</p>
       <div class="divider"></div>
     </header>
-      <nav class="nav">
-        <a href="index.html" class="active">
-          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 3h12a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
-            <path d="M8 7h8M8 10.5h8M8 14h5"/>
-            <circle cx="12" cy="19" r="2.2"/>
-            <path d="M10.6 20.6 10 23l2-1 2 1-.6-2.4"/>
-          </svg>
-          <span>Сертификаты</span>
-        </a>
-        <a href="articles.html">
-          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/>
-            <path d="M14 3v5h5"/>
-            <path d="M8 13h8M8 17h5"/>
-          </svg>
-          <span>Статьи</span>
-        </a>
-      </nav>
+
+    <nav class="nav">
+      <a href="index.html" class="active">
+        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 3h12a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+          <path d="M8 7h8M8 10.5h8M8 14h5"/>
+          <circle cx="12" cy="19" r="2.2"/>
+          <path d="M10.6 20.6 10 23l2-1 2 1-.6-2.4"/>
+        </svg>
+        <span>Сертификаты</span>
+      </a>
+      <a href="articles.html">
+        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/>
+          <path d="M14 3v5h5"/>
+          <path d="M8 13h8M8 17h5"/>
+        </svg>
+        <span>Статьи</span>
+      </a>
+    </nav>
+
     <div class="gallery" id="gallery">
       <div class="loading">Загружаю сертификаты…</div>
     </div>
   </div>
+
   <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-copy">
-      © <span id="footer-year"></span> Наталья Светлакова
-      <span class="footer-sep">·</span>
-      Все права защищены
+    <div class="footer-inner">
+      <div class="footer-copy">
+        © <span id="footer-year"></span> Наталья Светлакова
+        <span class="footer-sep">·</span>
+        Все права защищены
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/NatalyaSvetlakova" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-sep">·</span>
+        <a href="https://vk.ru/n_svetlakova" target="_blank" rel="noopener">ВКонтакте</a>
+      </div>
+      <div class="footer-note">
+        Материалы сайта (сертификаты, статьи, изображения) являются интеллектуальной собственностью автора.
+        Копирование без письменного разрешения запрещено.
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="https://github.com/NatalyaSvetlakova" target="_blank" rel="noopener">GitHub</a>
-      <span class="footer-sep">·</span>
-      <a href="https://vk.ru/n_svetlakova" target="_blank" rel="noopener">ВКонтакте</a>
-    </div>
-    <div class="footer-note">
-      Материалы сайта (сертификаты, статьи, изображения) являются интеллектуальной собственностью автора.
-      Копирование без письменного разрешения запрещено.
-    </div>
-  </div>
-</footer>
-  <!-- ↓ Кнопка «Наверх» -->
+  </footer>
+
+  <!-- Кнопка «Наверх» -->
   <button id="scroll-top" class="scroll-top" aria-label="Наверх">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M12 19V5"/>
@@ -1358,8 +1227,6 @@ html[data-theme="dark"] .article-date-badge {
   <div class="modal" id="cert-modal" aria-hidden="true">
     <div class="modal__backdrop" data-close></div>
     <div class="modal__content" role="dialog" aria-modal="true">
-
-      <!-- Верхняя панель с кнопками -->
       <div class="modal__header">
         <button class="modal__back" data-close>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1377,13 +1244,11 @@ html[data-theme="dark"] .article-date-badge {
               <circle cx="12" cy="12" r="4"/>
               <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
             </svg>
-          </button>          
+          </button>
         </div>
       </div>
 
-      <!-- ⬇⬇⬇ ЭТОГО БЛОКА НЕ ХВАТАЛО ⬇⬇⬇ -->
       <div class="modal__body" id="cert-modal-body"></div>
-
     </div>
   </div>
 
@@ -1391,166 +1256,14 @@ html[data-theme="dark"] .article-date-badge {
     const OWNER  = 'NatalyaSvetlakova';
     const REPO   = 'ns-psychology-profile';
     const FOLDER = 'certificates';
+    const DATA_URL = 'certificates.json';
 
-    const IMAGE_EXT = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'jfif', 'bmp'];
+    const IMAGE_EXT = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'jfif', 'bmp', 'img'];
     const PDF_EXT   = ['pdf'];
-
-    // Красивые названия: имя файла без расширения → что показывать
-    const TITLES = {
-      'certificate_01.09.25': 'Сертификат «Все про (не)лишний вес»',
-      'certificate_01.08.25': 'Аттестат «Базовый курс подготовки регрессологов»',
-      'certificate_01.07.25': 'Сертификат «Базовый курс подготовки регрессолога»',      
-      'certificate_30.04.24': 'Сертификат «Как помогать клиентам находить призвание»',
-      'certificate_27.06.24': 'Сертификат «Ты взрослый - тебе решать»',
-      'certificate_27.03.24': 'Сертификат «Каки зачем в арт-терапиииспользовать современные цифровые технологии»',
-      'certificate_27.02.24': 'Сертификат «Арт-диагностика в работе с детьми и семьями»',
-      'certificate_26.12.23': 'Сертификат «Волшебный камень: арт-терапия для поиска опор, ресурсов и смыслов»',
-      'certificate_26.01.24': 'Сертификат «Собираемся в дорогу, собираем чемодан»',
-      'certificate_25.04.24': 'Сертификат «Сказкотерапия»',
-      'certificate_25.02.24': 'Сертификат «Женские архетипы: раскрой свою силу»',
-      'certificate_24.06.24': 'Сертификат «Деньги, карьера, бизнес»',
-      'certificate_24.01.24': 'Сертификат «Управление стрессом: антихрупкость»',
-      'certificate_23.04.24': 'Сертификат «Здравствуй, Я. Как найти смысл жизни, призвание и раскрыть свой потенциал на максимум»',
-      'certificate_23.01.24': 'Сертификат «Арт-терапия в работе с эмоциями и чувствами»',
-      'certificate_22.02.24': 'Сертификат «Психосоматика»',
-      'certificate_21.05.26': 'Сертификат «Психосоматика: базовый курс»',
-      'certificate_09.07.24': 'Сертификат «2 причины, почему современная профориентация нужна всем помогающим практикам»',
-      'certificate_19.06.24': 'Сертификат «Как стать мастером эмоций»',
-      'certificate_19.04.24': 'Сертификат «Психология денежного мышления»',
-      'certificate_19.02.26': 'Сертификат «Детские травмы в теле взрослого человека: телесно-ориентированный подход в работе психолога»',
-      'certificate_18.04.24': 'Сертификат «ТАРО: от эзотерики до арт-терапии»',
-      'certificate_17.07.24': 'Сертификат «Архетипы и МАК»',
-      'certificate_16.04.24': 'Сертификат «От хандры до влюбленности. Арт-тнрапия с весенними эмоциями»',
-      'certificate_15.07.24': 'Сертификат «Психологическое консультирование с применением игротерапии и метафорических ассоциативных карт»',
-      'certificate_15.02.24': 'Сертификат «10 практических инструментов для современного арт-терапевта»',
-      'certificate_14.02.24': 'Сертификат «Разреши себе звучать»',
-      'certificate_13.08.24': 'Сертификат «Арт-терапия: чудо или наука»',
-      'certificate_13.05.24': 'Сертификат «Таро в арт-терапии и консультировании»',
-      'certificate_13.03.24': 'Сертификат «SoulCollage - волшебная трансформация журнальной картинки в послание души»',
-      'certificate_12.06.24': 'Сертификат «Как жить с травмой? Как быть с травмой?»',
-      'certificate_12.04.24': 'Сертификат «Сила метафоры в работе психолога»',
-      'certificate_11.07.24': 'Сертификат «4 причины выгорания и как из него выйти?»',
-      'certificate_10.05.24': 'Сертификат «Арт-терапия сегодня: арт-терапия в образовании, медицине, социальной сфере»',
-      'certificate_08.05.24': 'Сертификат «Маска в арт-терапии как ключ к откровениям души»',
-      'certificate_06.04.24': 'Сертификат «Арт-терапия: просто о сложном»',
-      'certificate_06.03.24': 'Сертификат «Территория счастливых женщин»',
-      'certificate_06.02.24': 'Сертификат «Психосоматика и психология телесности: основные проблемыи связь с медицинской практикой»',
-      'certificate_04.05.24': 'Сертификат «Волшебный камень»',
-      'certificate_14.01.18': 'Сертификат «Доверие и эмпатия в работе врача с пациентом»',
-      'certificate_04.07.24': 'Сертификат мастера психологической трансформационной игры «В тени своей тени»',
-      'certificate_03.05.24': 'Сертификат «Характерология для арт-терапевта: что это такое и как она может сделать работу эффективнее»',
-      'certificate__26.01.24': 'Сертификат «Ресурсы внутреннего ребенка»',
-      'diplom_23.05.24': 'Диплом «Практическая психология»',
-      'diplom_18.07.24': 'Диплом «Психологическое консультирование»',
-      'diplom_04.08.26': 'Диплом «Психологическая коррекция психосоматических заболеваний»',
-    };
-
-    // Метаданные: имя файла без расширения → «кто выдал · год»
-    const META = {
-      'certificate_01.09.25': 'Центр «Инфогармония» · 2025',
-      'certificate_01.08.25': 'Центр «Инфогармония» · 2025',
-      'certificate_01.07.25': 'Центр «Инфогармония» · 2025',
-      'certificate_30.04.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
-      'certificate_27.06.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
-      'certificate_27.03.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_27.02.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_26.12.23': 'Международная Школа Арт-терапии · 2023',
-      'certificate_26.01.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_25.04.24': 'Новая академия практической психологии · 2024',
-      'certificate_25.02.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_24.06.24': 'Новая академия практической психологии · 2024',
-      'certificate_24.01.24': 'Новая академия практической психологии · 2024',
-      'certificate_21.05.26': 'Высшие курсы практической психологии · 2024',
-      'certificate_23.04.24': 'Новая академия практической психологии · 2024',
-      'certificate_23.01.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_22.02.24': 'Новая академия практической психологии · 2024',
-      'certificate_21.05.26': 'Высшие курсы практической психологии · 2026',
-      'certificate_21.05.24': 'Новая академия практической психологии · 2024',
-      'certificate_09.07.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
-      'certificate_19.06.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_09.07.25': 'Новая академия практической психологии · 2024',
-      'certificate_19.02.26': 'Академия практической психологии «Псиинтеллект» · 2026',
-      'certificate_19.04.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_17.07.24': 'Новая академия практической психологии · 2024',
-      'certificate_16.04.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_15.07.24': 'Новая академия практической психологии · 2024',
-      'certificate_15.02.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_14.02.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_13.08.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_13.05.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_13.03.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_12.06.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_12.04.24': 'Новая академия практической психологии · 2024',
-      'certificate_11.07.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
-      'certificate_10.05.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_08.05.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate_06.04.24': 'Международная Школа Арт-терапии · 2024 · 2024',
-      'certificate_06.03.24': 'Новая академия практической психологии · 2024',
-      'certificate_06.02.24': 'Портал непрерывного медицинского и фармацевтического образования МЗ РФ · 2024',
-      'certificate_14.01.18': 'ООО «Бизнес Спич» · 2018',
-      'certificate_04.05.24': 'Международная Школа Арт-терапии · 2024 · 2024',
-      'certificate_03.07.24': 'Новая академия практической психологии · 2024',
-      'certificate_03.05.24': 'Международная Школа Арт-терапии · 2024',
-      'certificate__26.01.24': 'Новая академия практической психологии · 2024',
-      'diplom_23.05.24': 'АНО ВО «Европейский Университет „Бизнес Треугольник“» · 2023-2024',
-      'diplom_18.07.24': 'ООО «Евразийская Академия Современного Образования» · 2024',
-      'diplom_04.08.26': 'АНПОО «Колледж практической психологии» · 2026',
-    };
-
-    // Часы обучения: имя файла без расширения → число часов
-    const HOURS = {        
-        'certificate_01.09.25': 18,
-        'certificate_01.08.25': 80,
-        'certificate_01.07.25': 80,
-        'certificate_30.04.24': 2.5,
-        'certificate_27.06.24': 2.5,
-        'certificate_27.03.24': 2,
-        'certificate_27.02.24': 2,
-        'certificate_26.12.23': 2,
-        'certificate_26.01.24': 2,
-        'certificate_25.04.24': 18,
-        'certificate_25.02.24': 2,
-        'certificate_24.06.24': 4,
-        'certificate_24.01.24': 2.5,
-        'certificate_23.04.24': 2.5,
-        'certificate_23.01.24': 2,
-        'certificate_22.02.24': 18,
-        'certificate_21.05.26': 10,
-        'certificate_21.05.24': 2.5,
-        'certificate_06.02.24': 2.5,
-        'certificate_09.07.24': 2.5,
-        'certificate_19.06.24': 2,
-        'certificate_19.04.24': 2.5,
-        'certificate_19.02.26': 2,
-        'certificate_18.04.24': 2,
-        'certificate_17.07.24': 8,
-        'certificate_16.04.24': 2,
-        'certificate_15.07.24': 256,
-        'certificate_15.02.24': 12,
-        'certificate_14.02.24': 2,
-        'certificate_13.08.24': 2,
-        'certificate_13.05.24': 30, 
-        'certificate_13.03.24': 2,
-        'certificate_12.06.24': 2,
-        'certificate_12.04.24': 2.5,
-        'certificate_11.07.24': 2.5,
-        'certificate_10.05.24': 8,
-        'certificate_08.05.24': 2,
-        'certificate_06.04.24': 2,
-        'certificate_06.03.24': 2.5,
-        'certificate_14.01.18': 4,
-        'certificate_06.02.24': 2,
-        'certificate_04.05.24': 2,
-        'certificate_03.07.24': 2,
-        'certificate_03.05.24': 2,
-        'certificate__26.01.24': 2,
-        'diplom_23.05.24': 700,
-        'diplom_18.07.24': 256,
-        'diplom_04.08.26': 360,
-    };
 
     const gallery = document.getElementById('gallery');
 
+    // ===== Вспомогательные функции =====
     function getExt(name) {
       const i = name.lastIndexOf('.');
       return i === -1 ? '' : name.slice(i + 1).toLowerCase();
@@ -1561,7 +1274,6 @@ html[data-theme="dark"] .article-date-badge {
       return i === -1 ? name : name.slice(0, i);
     }
 
-    // Умный humanize: certificate_01.07.25 → «Сертификат · 01.07.2025»
     function humanize(name) {
       const m = name.match(/^certificate[_\-\s]+(\d{2})\.(\d{2})\.(\d{2})$/i);
       if (m) {
@@ -1579,7 +1291,26 @@ html[data-theme="dark"] .article-date-badge {
       return p.split('/').map(encodeURIComponent).join('/');
     }
 
-    // ===== Переключатель темы =====
+    function pluralHours(n) {
+      const num = Math.abs(n) % 100;
+      const lastDigit = num % 10;
+      if (num >= 11 && num <= 14) return 'часов';
+      if (lastDigit === 1) return 'час';
+      if (lastDigit >= 2 && lastDigit <= 4) return 'часа';
+      return 'часов';
+    }
+
+    function extractDateFromName(name) {
+      const match = name.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
+      if (match) {
+        let [, day, month, year] = match;
+        if (year.length === 2) year = '20' + year;
+        return new Date(`${year}-${month}-${day}`).getTime();
+      }
+      return 0;
+    }
+
+    // ===== Тема =====
     (function initTheme() {
       const saved = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1587,23 +1318,35 @@ html[data-theme="dark"] .article-date-badge {
       document.documentElement.setAttribute('data-theme', theme);
 
       const btn = document.getElementById('theme-toggle');
-      
-      btn.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);        
-      });
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
     })();
 
+    // ===== Загрузка сертификатов =====
     async function loadCertificates() {
-      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FOLDER}`;
+      let files, data;
 
-      let files;
       try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('GitHub API: ' + res.status);
-        files = await res.json();
+        const [filesRes, dataRes] = await Promise.all([
+          fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FOLDER}`),
+          fetch(DATA_URL)
+        ]);
+
+        if (!filesRes.ok) {
+          throw new Error('GitHub API: ' + filesRes.status);
+        }
+        if (!dataRes.ok) {
+          throw new Error('certificates.json: ' + dataRes.status);
+        }
+
+        files = await filesRes.json();
+        data  = await dataRes.json();
       } catch (err) {
         gallery.innerHTML = `<div class="error">Не удалось загрузить сертификаты.<br>${err.message}</div>`;
         return;
@@ -1623,23 +1366,7 @@ html[data-theme="dark"] .article-date-badge {
         return;
       }
 
-            // Вспомогательная функция для извлечения даты из имени файла (ДД.ММ.ГГ)
-      function extractDateFromName(name) {
-        const match = name.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
-        if (match) {
-          let day = match[1];
-          let month = match[2];
-          let year = match[3];
-          if (year.length === 2) {
-            year = '20' + year; // Преобразуем 24 в 2024
-          }
-          // Возвращаем время в миллисекундах для сравнения
-          return new Date(`${year}-${month}-${day}`).getTime();
-        }
-        return 0; // Если дата не найдена — отправить в конец
-      }
-
-      // Кастомная сортировка: сначала дипломы, потом сертификаты, внутри — по дате (сначала новые)
+      // Сортировка: дипломы → сертификаты, внутри — по дате (новые сверху)
       certs.sort((a, b) => {
         const nameA = getBase(a.name);
         const nameB = getBase(b.name);
@@ -1647,47 +1374,48 @@ html[data-theme="dark"] .article-date-badge {
         const isDiplomA = nameA.startsWith('diplom');
         const isDiplomB = nameB.startsWith('diplom');
 
-        // 1. Группировка по типу: дипломы идут первыми
         if (isDiplomA && !isDiplomB) return -1;
         if (!isDiplomA && isDiplomB) return 1;
 
-        // 2. Внутри одной группы сортируем по дате (от новых к старым)
         const dateA = extractDateFromName(nameA);
         const dateB = extractDateFromName(nameB);
 
-        if (dateA !== dateB) {
-          return dateB - dateA; // Сортировка по убыванию (новые сверху)
-        }
+        if (dateA !== dateB) return dateB - dateA;
 
-        // 3. Если даты совпали или не найдены — сортируем по алфавиту
         return nameA.localeCompare(nameB, 'ru');
       });
 
       gallery.innerHTML = certs.map(file => {
-        const ext = getExt(file.name);
-        const base = getBase(file.name);
+        const ext   = getExt(file.name);
+        const base  = getBase(file.name);
         const isPdf = PDF_EXT.includes(ext);
-        const fileUrl = file.download_url
-          || `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${FOLDER}/${encodePath(file.name)}`;
 
-        const title = TITLES[base] || humanize(base);
-        const meta  = META[base] || '';
+        // Для изображений всегда используем .webp
+        const fileNameForUrl = file.name; 
+
+        const fileUrl = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${FOLDER}/${encodePath(fileNameForUrl)}`;
+
+        const info  = data[base] || {};
+        const title = info.title || humanize(base);
+        const meta  = info.meta  || '';
+        const hours = info.hours;
         const typeLabel = isPdf ? 'PDF' : 'IMG';
-        const hours = HOURS[base];
 
         const thumb = isPdf
           ? `<div class="cert-thumb-pdf"><span>PDF</span></div>`
           : `<img src="${fileUrl}" alt="${title}" loading="lazy">`;
 
         return `
-          <a href="${fileUrl}" class="cert-card" data-file-url="${fileUrl}" data-file-type="${isPdf ? 'pdf' : 'image'}" data-file-title="${title.replace(/"/g, '&quot;')}">
+          <a href="${fileUrl}" class="cert-card"
+             data-file-url="${fileUrl}"
+             data-file-type="${isPdf ? 'pdf' : 'image'}"
+             data-file-title="${title.replace(/"/g, '&quot;')}">
             <span class="cert-type">${typeLabel}</span>
-            ${hours ? `
-                <span class="cert-hours" title="Объём программы">
-                    <span class="cert-hours__icon" aria-hidden="true">⏱</span>
-                    <span class="cert-hours__value">${hours} ${pluralHours(hours)}</span>
-                </span>
-                ` : ''}
+            ${hours != null ? `
+              <span class="cert-hours" title="Объём программы">
+                <span class="cert-hours__icon" aria-hidden="true">⏱</span>
+                <span class="cert-hours__value">${hours} ${pluralHours(hours)}</span>
+              </span>` : ''}
             <div class="cert-thumb">${thumb}</div>
             <div class="cert-info">
               <h3 class="cert-title">${title}</h3>
@@ -1698,17 +1426,9 @@ html[data-theme="dark"] .article-date-badge {
         `;
       }).join('');
     }
-    // Склонение слова «час» по числу
-    function pluralHours(n) {
-    const num = Math.abs(n) % 100;
-    const lastDigit = num % 10;
 
-    if (num >= 11 && num <= 14) return 'часов';
-    if (lastDigit === 1) return 'час';
-    if (lastDigit >= 2 && lastDigit <= 4) return 'часа';
-    return 'часов';
-    }
     loadCertificates();
+
     // ===== Кнопка «Наверх» =====
     (function initScrollTop() {
       const btn = document.getElementById('scroll-top');
@@ -1722,112 +1442,104 @@ html[data-theme="dark"] .article-date-badge {
         }
       }
 
-      // Показываем/скрываем при скролле
       window.addEventListener('scroll', updateVisibility, { passive: true });
-      updateVisibility(); // проверить сразу при загрузке
+      updateVisibility();
 
-      // Плавный скролл наверх
       btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     })();
+
     // Автогод в футере
     (function setFooterYear() {
       const el = document.getElementById('footer-year');
       if (el) el.textContent = new Date().getFullYear();
     })();
 
-        // Ждём, пока HTML полностью загрузится, чтобы модалка точно была в DOM
+    // ===== Модальное окно =====
     document.addEventListener('DOMContentLoaded', function () {
+      (function initCertModal() {
+        const modal = document.getElementById('cert-modal');
+        const body  = document.getElementById('cert-modal-body');
+        if (!modal || !body) return;
 
-          // ===== Модальное окно сертификатов =====
-    (function initCertModal() {
-      const modal = document.getElementById('cert-modal');
-      const body  = document.getElementById('cert-modal-body');
-      if (!modal || !body) {
-        console.warn('Модальное окно не найдено в HTML');
-        return;
-      }
+        let lastFocused = null;
 
-      let lastFocused = null;
+        function openModal(url, type, title) {
+          lastFocused = document.activeElement;
+          body.innerHTML = '';
 
-      function openModal(url, type, title) {
-        lastFocused = document.activeElement;
-        body.innerHTML = '';
+          if (type === 'pdf') {
+            const iframe = document.createElement('iframe');
+            iframe.src = url + '#toolbar=0&view=FitH';
+            iframe.title = title || 'PDF';
+            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
+            body.appendChild(iframe);
+          } else {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = title || '';
+            body.appendChild(img);
+          }
 
-        if (type === 'pdf') {
-          const iframe = document.createElement('iframe');
-          iframe.src = url + '#toolbar=0&view=FitH';
-          iframe.title = title || 'PDF';
-          iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
-          body.appendChild(iframe);
-        } else {
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = title || '';
-          body.appendChild(img);
+          modal.classList.add('is-open');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('modal-open');
         }
 
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-      }
+        function closeModal() {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('modal-open');
+          setTimeout(() => { body.innerHTML = ''; }, 400);
+          if (lastFocused && lastFocused.focus) lastFocused.focus();
+        }
 
-      function closeModal() {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-        setTimeout(() => { body.innerHTML = ''; }, 400);
-        if (lastFocused && lastFocused.focus) lastFocused.focus();
-      }
+        // Перехват клика по карточке (фаза захвата)
+        document.addEventListener('click', function (e) {
+          const card = e.target.closest('.cert-card');
+          if (!card) return;
 
-      // === Главный обработчик: перехватываем клик В ФАЗЕ ЗАХВАТА ===
-      document.addEventListener('click', function (e) {
-        const card = e.target.closest('.cert-card');
-        if (!card) return;
+          const url = card.getAttribute('data-file-url');
+          if (!url) return;
 
-        // Если карточка есть, но data-file-url отсутствует — не мешаем
-        const url = card.getAttribute('data-file-url');
-        if (!url) return;
-
-        // Жёстко останавливаем всё
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-
-        const type  = card.getAttribute('data-file-type') || 'image';
-        const title = card.getAttribute('data-file-title') || '';
-        openModal(url, type, title);
-      }, true); // <--- ВАЖНО: true = фаза захвата, срабатывает раньше, чем ссылка
-
-      // Закрытие по клику на фон / кнопку / крестик
-      document.addEventListener('click', function (e) {
-        if (e.target.closest('[data-close]')) {
           e.preventDefault();
-          closeModal();
-        }
-      });
+          e.stopPropagation();
+          e.stopImmediatePropagation();
 
-          // Переключатель темы внутри модалки
-    const modalThemeBtn = document.getElementById('modal-theme-toggle');
-    if (modalThemeBtn) {
-      modalThemeBtn.addEventListener('click', function (e) {
-        e.stopPropagation(); // чтобы клик не ушёл в data-close
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-      });
-    }
+          const type  = card.getAttribute('data-file-type') || 'image';
+          const title = card.getAttribute('data-file-title') || '';
+          openModal(url, type, title);
+        }, true);
 
-      // Закрытие по Escape
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-          closeModal();
+        // Закрытие
+        document.addEventListener('click', function (e) {
+          if (e.target.closest('[data-close]')) {
+            e.preventDefault();
+            closeModal();
+          }
+        });
+
+        // Переключатель темы в модалке
+        const modalThemeBtn = document.getElementById('modal-theme-toggle');
+        if (modalThemeBtn) {
+          modalThemeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+          });
         }
-      });
-    })();
-  });  
+
+        // Escape
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+          }
+        });
+      })();
+    });
   </script>
 </body>
 </html>

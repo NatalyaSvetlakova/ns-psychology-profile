@@ -42,8 +42,7 @@
       --primary: #e6889a; /* Более нежный розовый для темной темы */
       --primary-dark: #c96d80;
       --primary-soft: rgba(230, 136, 154, 0.15);
-      --gold: #d4b274;
-      
+      --gold: #d4b274;      
       --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
       --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
       --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
@@ -51,9 +50,7 @@
       --glow-gold: 0 0 30px rgba(212, 178, 116, 0.3);
     }
 
-    * { box-sizing: border-box; }
-
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; }    
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -78,9 +75,7 @@
       font-size: (1.8rem, 4.5vw, 3rem);
       margin: 0 0 16px;
       font-weight: 500;
-      letter-spacing: -0.5px;  
-      
-        /* Градиентный текст с магическим свечением */
+      letter-spacing: -0.5px; 
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-dark) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -139,18 +134,14 @@
       opacity: 0.5;
     }
 
-/* ==========================================================================
-   УСПОКАИВАЮЩИЙ ФОН 
-   Пастельные тона (лаванда, шалфей, персик) + мягкое «дыхание»
-   ========================================================================== */
+/* УСПОКАИВАЮЩИЙ ФОН */
 
     .magic-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       overflow: hidden;
-      pointer-events: none;
-      /* Мягкий градиент из успокаивающих оттенков */
+      pointer-events: none;      
       background: linear-gradient(180deg, #fcfaf7 0%, #f7f2ee 50%, #f2ece7 100%);
     }
 
